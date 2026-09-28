@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import sealLogo from '../Assets/Logos/am-26.png'
 
 export default function Hero() {
   const rootRef = useRef(null)
@@ -71,8 +70,6 @@ export default function Hero() {
 
           <p>Arte, comunidad, espacio de creación e intercambio cultural.</p>
 
-          <div className="hero-meta">15 OCT · 12 NOV · 10 DIC</div>
-
           <div className="scroll-cue">SCROLL TO EXPLORE</div>
         </div>
 
@@ -80,7 +77,6 @@ export default function Hero() {
           <div className="placeholder-frame">
             <div className="frame-lines" aria-hidden="true" />
           </div>
-          <img src={sealLogo} alt="AM 26" className="seal-mark" />
         </div>
       </div>
     </section>

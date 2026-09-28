@@ -1,5 +1,8 @@
 import { useEffect } from 'react'
 import Header from './components/Header'
+import seasonOnePhoto from './Assets/Fotos/POST 3.png'
+import seasonTwoPhoto from './Assets/Fotos/Imagen de ChatGPT 28 sept 2026, 05_06_15 p.m..png'
+import territoryPhoto from './Assets/Fotos/ChatGPT Image 17 sept 2026, 11_20_22 a.m..png'
 
 export default function App() {
   useEffect(() => {
@@ -133,15 +136,14 @@ export default function App() {
 
               <div className="encounter-body">
                 <div className="encounter-name">RAÚL SALVESTRINI</div>
-                <div className="encounter-line" aria-hidden="true" />
               </div>
 
               <div
                 className="encounter-visual"
                 data-parallax="0.12"
-                aria-label="Espacio reservado para foto del encuentro 01"
+                aria-label="Fotografía del encuentro 01"
               >
-                <span className="photo-placeholder" />
+                <img src={seasonOnePhoto} alt="Raúl Salvestrini en el encuentro MIRAR" />
               </div>
             </article>
 
@@ -154,15 +156,14 @@ export default function App() {
 
               <div className="encounter-body">
                 <div className="encounter-name">LEONARDO PORTUS</div>
-                <div className="encounter-line" aria-hidden="true" />
               </div>
 
               <div
                 className="encounter-visual"
                 data-parallax="0.18"
-                aria-label="Espacio reservado para foto del encuentro 02"
+                aria-label="Fotografía del encuentro 02"
               >
-                <span className="photo-placeholder" />
+                <img src={seasonTwoPhoto} alt="Leonardo Portus en el encuentro HABITAR" />
               </div>
             </article>
           </div>
@@ -185,9 +186,9 @@ export default function App() {
           <div
             className="territory-frame"
             data-parallax="0.2"
-            aria-label="Marco editorial para una fotografía real del territorio"
+            aria-label="Fotografía real del territorio de Matanzas"
           >
-            <span className="territory-frame-inner" />
+            <img src={territoryPhoto} alt="Paisaje de Matanzas con mar y costa" />
           </div>
         </section>
 
@@ -203,6 +204,8 @@ export default function App() {
               encontrarnos.
             </p>
           </div>
+
+          <div className="participate-visual" aria-label="Espacio reservado para una fotografía de comunidad o actividad" />
 
           <nav className="participate-links" aria-label="Participar en la temporada">
             <a href="#temporada">ASISTIR A UN ENCUENTRO</a>
@@ -223,7 +226,7 @@ export default function App() {
       <footer id="prensa" className="site-footer">
         <div>ART MATANZAS 2026</div>
         <div>MATANZAS · CHILE</div>
-        <div>15 OCT · 12 NOV · 10 DIC</div>
+        <div>2026</div>
       </footer>
     </div>
   )
