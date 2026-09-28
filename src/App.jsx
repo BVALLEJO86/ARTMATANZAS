@@ -1,10 +1,15 @@
-import React from 'react'
+import Header from './components/Header'
+import Hero from './components/Hero'
+import ProjectIntro from './components/ProjectIntro'
 
 export default function App() {
   return (
-    <div style={{fontFamily: 'system-ui, sans-serif', padding: 24}}>
-      <h1>Vite + React (JavaScript)</h1>
-      <p>Funcionando localmente.</p>
+    <div className="page-shell">
+      <Header />
+      <main>
+        <Hero />
+        <ProjectIntro />
+      </main>
     </div>
   )
 }

@@ -1,8 +1,456 @@
-html,body,#root{
-  height:100%;
-  margin:0;
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #FAFAFA;
+  --black: #111111;
+  --text: #111111;
+  --muted: #4a4a4a;
+  --line: rgba(17, 17, 17, 0.2);
+  --accent: #7fa9c8;
+  --panel: #111111;
+  --font-display: 'Arial', 'Helvetica Neue', sans-serif;
+  --font-body: 'Sora', 'Segoe UI', sans-serif;
 }
-body{
-  background:#f7f7f8;
-  color:#111;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #FAFAFA;
+  color: #111111;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#root {
+  min-height: 100vh;
+  background: #FAFAFA;
+}
+
+.page-shell {
+  background: #FAFAFA;
+  color: #111111;
+}
+
+main {
+  width: 100%;
+  background: #FAFAFA;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 34px;
+  background: #FAFAFA;
+  position: relative;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 0;
+  height: 1px;
+  background: #111111;
+}
+
+.brand-block {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.brand-logo {
+  width: 250px;
+  max-width: none;
+  height: auto;
+  min-width: 250px;
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  gap: 72px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #111111;
+  font-family: var(--font-body);
+}
+
+.main-nav a {
+  color: #111111;
+  text-decoration: none;
+  position: relative;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+.main-nav a::after {
+  display: none;
+}
+
+.main-nav a:hover,
+.main-nav a:focus-visible {
+  color: #111111;
+}
+
+.menu-toggle {
+  display: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  width: 42px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-toggle-line {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: #111111;
+}
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 5.2rem;
+  background: #111111;
+  color: #f6f3ee;
+}
+
+.hero-inner {
+  width: min(100%, 1460px);
+  margin: 0 auto;
+  padding: 2rem 2.2rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.hero-copy {
+  grid-column: 1 / span 7;
+  padding-top: 1rem;
+}
+
+.hero-kicker {
+  margin: 0 0 1.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 250, 0.72);
+}
+
+.hero-title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1em;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 10rem);
+  line-height: 0.84;
+  letter-spacing: -0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #FAFAFA;
+}
+
+.hero-title span {
+  display: block;
+  max-width: 780px;
+}
+
+.hero-copy p {
+  max-width: 620px;
+  margin: 1.5rem 0 0;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: rgba(250, 250, 250, 0.8);
+  font-family: var(--font-body);
+}
+
+.hero-meta {
+  margin-top: 1.8rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 250, 0.72);
+}
+
+.scroll-cue {
+  margin-top: 2.4rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 250, 0.72);
+}
+
+.hero-visual {
+  grid-column: 8 / span 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 540px;
+}
+
+.placeholder-frame {
+  position: relative;
+  width: min(100%, 430px);
+  aspect-ratio: 0.8;
+  border: 1px solid rgba(250, 250, 250, 0.18);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.placeholder-frame::before,
+.placeholder-frame::after {
+  content: '';
+  position: absolute;
+  inset: 1.1rem;
+  border: 1px solid rgba(250, 250, 250, 0.18);
+}
+
+.frame-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, transparent 0, transparent calc(100% - 1px), rgba(250, 250, 250, 0.18) calc(100% - 1px), rgba(250, 250, 250, 0.18) 100%),
+    linear-gradient(to bottom, transparent 0, transparent calc(100% - 1px), rgba(250, 250, 250, 0.18) calc(100% - 1px), rgba(250, 250, 250, 0.18) 100%);
+  background-size: 25% 25%;
+}
+
+.seal-mark {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 0.8rem;
+  width: 56px;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.project-intro {
+  width: min(100%, 1460px);
+  margin: 0 auto;
+  padding: 2.5rem 2.2rem 5rem;
+}
+
+.project-intro-header {
+  margin-bottom: 1.4rem;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.project-heading {
+  grid-column: 1 / span 7;
+}
+
+.project-heading h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 6.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.07em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.project-copy {
+  grid-column: 8 / span 5;
+  padding-top: 0.9rem;
+}
+
+.project-copy p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.project-assertion {
+  color: var(--text) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem !important;
+  line-height: 1.5 !important;
+}
+
+.project-actors {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.64rem !important;
+  color: var(--accent) !important;
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    height: 76px;
+    padding: 0 20px;
+  }
+
+  .site-header::after {
+    left: 20px;
+    right: 20px;
+  }
+
+  .brand-block {
+    min-height: 50px;
+  }
+
+  .brand-logo {
+    width: 150px;
+  }
+
+  .main-nav {
+    gap: 1.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+  }
+
+  .hero-inner,
+  .project-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .hero-copy,
+  .hero-visual,
+  .project-heading,
+  .project-copy {
+    grid-column: 1 / -1;
+  }
+
+  .hero-copy {
+    padding-top: 0.5rem;
+  }
+
+  .hero-visual {
+    min-height: 360px;
+    margin-top: 0.5rem;
+  }
+
+  .project-intro,
+  .hero-inner {
+    padding-left: 1.1rem;
+    padding-right: 1.1rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    height: 76px;
+    padding: 0 20px;
+  }
+
+  .site-header::after {
+    left: 20px;
+    right: 20px;
+  }
+
+  .brand-block {
+    min-height: 50px;
+  }
+
+  .brand-logo {
+    width: 150px;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .main-nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 20px;
+    right: 20px;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1rem 1.1rem;
+    background: #FAFAFA;
+    border-bottom: 1px solid #111111;
+    border-left: 1px solid #111111;
+    border-right: 1px solid #111111;
+    z-index: 25;
+    margin-left: 0;
+  }
+
+  .main-nav.is-open {
+    display: flex;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 16vw, 5rem);
+  }
+
+  .hero-copy p,
+  .project-copy p {
+    font-size: 0.96rem;
+  }
+
+  .project-heading h2 {
+    font-size: clamp(2.5rem, 13vw, 4rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
