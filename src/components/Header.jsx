@@ -4,19 +4,17 @@ import logo from '../Assets/Logos/art-matanzas-horizontal.png'
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const closeMenu = () => setIsMenuOpen(false)
-
   return (
     <header className="site-header">
-      <div className="brand-block">
+      <a href="#inicio" className="brand-block" aria-label="Volver al inicio">
         <img src={logo} alt="ART MATANZAS" className="brand-logo" />
-      </div>
+      </a>
 
       <nav className={`main-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Navegación principal">
-        <a href="#temporada" onClick={closeMenu}>TEMPORADA</a>
-        <a href="#territorio" onClick={closeMenu}>TERRITORIO</a>
-        <a href="#participar" onClick={closeMenu}>PARTICIPAR</a>
-        <a href="#prensa" onClick={closeMenu}>PRENSA</a>
+        <a href="#temporada">TEMPORADA</a>
+        <a href="#territorio">TERRITORIO</a>
+        <a href="#participar">PARTICIPAR</a>
+        <a href="#prensa">PRENSA</a>
       </nav>
 
       <button

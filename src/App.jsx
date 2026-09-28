@@ -41,11 +41,20 @@ export default function App() {
     const interactiveTargets = Array.from(document.querySelectorAll('a, button, input, textarea, select, [role="button"]'))
     const parallaxTargets = Array.from(document.querySelectorAll('[data-parallax]'))
 
+    const setHoverState = (isHovering) => {
+      cursor.classList.toggle('is-hovering', isHovering)
+    }
+
+    interactiveTargets.forEach((element) => {
+      element.addEventListener('pointerenter', () => setHoverState(true))
+      element.addEventListener('pointerleave', () => setHoverState(false))
+    })
+
     let mouseX = window.innerWidth / 2
     let mouseY = window.innerHeight / 2
     let cursorX = mouseX
     let cursorY = mouseY
-    let currentSize = 14
+    let currentSize = 12
 
     const handlePointerMove = (event) => {
       mouseX = event.clientX
@@ -53,25 +62,7 @@ export default function App() {
     }
 
     const updateCursorSize = () => {
-      let nextSize = 14
-      let nearestDistance = Infinity
-
-      interactiveTargets.forEach((element) => {
-        const rect = element.getBoundingClientRect()
-        const closestX = Math.min(Math.max(mouseX, rect.left), rect.right)
-        const closestY = Math.min(Math.max(mouseY, rect.top), rect.bottom)
-        const distance = Math.hypot(mouseX - closestX, mouseY - closestY)
-
-        if (distance < nearestDistance) {
-          nearestDistance = distance
-        }
-
-        if (distance <= 70) {
-          const sizeFactor = 1 + (1 - distance / 70) * 1.4286
-          nextSize = Math.max(nextSize, 14 * sizeFactor)
-        }
-      })
-
+      const nextSize = cursor.classList.contains('is-hovering') ? 30 : 12
       currentSize += (nextSize - currentSize) * 0.18
       cursor.style.width = `${currentSize}px`
       cursor.style.height = `${currentSize}px`
@@ -116,6 +107,13 @@ export default function App() {
       <Header />
 
       <main className="editorial-page">
+        <section id="inicio" className="hero">
+          <div className="hero-inner">
+            <p className="eyebrow">ART MATANZAS</p>
+            <h1>UN TERRITORIO PARA EL ARTE.</h1>
+          </div>
+        </section>
+
         <section id="temporada" className="section-shell season-section">
           <div className="section-heading">
             <p className="eyebrow">Temporada inaugural</p>
@@ -222,7 +220,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="site-footer">
+      <footer id="prensa" className="site-footer">
         <div>ART MATANZAS 2026</div>
         <div>MATANZAS · CHILE</div>
         <div>15 OCT · 12 NOV · 10 DIC</div>
