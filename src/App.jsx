@@ -55,6 +55,7 @@ export default function App() {
 
     const interactiveTargets = Array.from(document.querySelectorAll('a, button, input, textarea, select, [role="button"]'))
     const parallaxTargets = Array.from(document.querySelectorAll('[data-parallax]'))
+    const heroParallaxTargets = Array.from(document.querySelectorAll('[data-parallax-hero]'))
 
     const setHoverState = (isHovering) => {
       cursor.classList.toggle('is-hovering', isHovering)
@@ -91,6 +92,8 @@ export default function App() {
       requestAnimationFrame(animateCursor)
     }
 
+    let ticking = false
+
     const handleScroll = () => {
       const scrollY = window.scrollY
       parallaxTargets.forEach((element) => {
@@ -100,6 +103,28 @@ export default function App() {
         const clamped = Math.max(-40, Math.min(40, offset))
         element.style.transform = `translate3d(0, ${clamped}px, 0)`
       })
+
+      const updateHeroParallax = () => {
+        heroParallaxTargets.forEach((element) => {
+          const speed = Number(element.dataset.parallaxHero || 0.08)
+          const translateY = Math.max(-80, Math.min(80, scrollY * speed * 0.12))
+          const rotate = Math.max(-2, Math.min(2, scrollY * speed * 0.0018))
+          const current = element.style.transform
+          if (current && current.includes('rotate')) {
+            element.style.transform = `translate3d(0, ${translateY}px, 0) rotate(${rotate}deg)`
+          } else {
+            element.style.transform = `translate3d(0, ${translateY}px, 0)`
+          }
+        })
+      }
+
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateHeroParallax()
+          ticking = false
+        })
+        ticking = true
+      }
     }
 
     document.body.classList.add('has-custom-cursor')
@@ -142,6 +167,12 @@ export default function App() {
 
       <main className="editorial-page">
         <section id="inicio" className="hero">
+          <div className="hero-geometry" aria-hidden="true">
+            <span className="hero-geo hero-geo-circle" data-parallax-hero="0.10" />
+            <span className="hero-geo hero-geo-frame" data-parallax-hero="0.12" />
+            <span className="hero-geo hero-geo-diagonal" data-parallax-hero="0.16" />
+          </div>
+
           <div className="hero-inner">
             <p className="eyebrow">PROYECTO</p>
             <h1>UN TERRITORIO PARA EL ARTE.</h1>

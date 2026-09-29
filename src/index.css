@@ -608,6 +608,61 @@ html {
   border-top: 1px solid rgba(250, 250, 250, 0.12);
 }
 
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.hero-geometry {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-geo {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+  transform: translate3d(0, 0, 0) rotate(0deg);
+}
+
+.hero-geo-circle {
+  width: 26rem;
+  height: 26rem;
+  right: -4rem;
+  top: 3rem;
+  border-radius: 50%;
+  background: #64CFE8;
+}
+
+.hero-geo-frame {
+  width: 18rem;
+  height: 18rem;
+  left: 9%;
+  bottom: 6%;
+  border: 2px solid #C86A4D;
+  background: transparent;
+}
+
+.hero-geo-diagonal {
+  width: 28rem;
+  height: 2px;
+  left: 36%;
+  top: 22%;
+  background: #111111;
+  transform-origin: center;
+  transform: translate3d(0, 0, 0) rotate(-18deg);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.12s linear;
+}
+
 .custom-cursor {
   position: fixed;
   left: 0;
@@ -697,6 +752,12 @@ body.has-custom-cursor .custom-cursor {
     grid-template-columns: 1fr;
     padding-left: 20px;
     padding-right: 20px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-geo {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
 }
 
@@ -795,6 +856,11 @@ body.has-custom-cursor .custom-cursor {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .hero-geo {
+    transform: none !important;
+    transition: none !important;
   }
 
   body,
