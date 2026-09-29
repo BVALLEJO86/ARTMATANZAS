@@ -44,8 +44,16 @@ export default function App() {
       revealObserver.observe(section)
     })
 
+    document.addEventListener('scroll', updateIntroProgress, { passive: true })
+    window.addEventListener('resize', updateIntroProgress)
+    updateIntroProgress()
+
     if (!pointerFine.matches) {
-      return () => revealObserver.disconnect()
+      return () => {
+        revealObserver.disconnect()
+        document.removeEventListener('scroll', updateIntroProgress)
+        window.removeEventListener('resize', updateIntroProgress)
+      }
     }
 
     const cursor = document.getElementById('custom-cursor')
@@ -130,10 +138,7 @@ export default function App() {
     document.body.classList.add('has-custom-cursor')
     document.addEventListener('pointermove', handlePointerMove)
     document.addEventListener('scroll', handleScroll, { passive: true })
-    document.addEventListener('scroll', updateIntroProgress, { passive: true })
-    window.addEventListener('resize', updateIntroProgress)
     handleScroll()
-    updateIntroProgress()
     animateCursor()
 
     return () => {
