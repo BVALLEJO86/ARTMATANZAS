@@ -9,17 +9,6 @@ export default function App() {
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const pointerFine = window.matchMedia('(pointer: fine)')
-    const intro = document.querySelector('.architectural-intro')
-
-    const updateIntroProgress = () => {
-      if (!intro) {
-        return
-      }
-
-      const maxScroll = window.innerHeight * 0.9
-      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll))
-      intro.style.setProperty('--intro-progress', progress.toFixed(3))
-    }
 
     const sections = document.querySelectorAll('.section-shell')
 
@@ -130,10 +119,7 @@ export default function App() {
     document.body.classList.add('has-custom-cursor')
     document.addEventListener('pointermove', handlePointerMove)
     document.addEventListener('scroll', handleScroll, { passive: true })
-    document.addEventListener('scroll', updateIntroProgress, { passive: true })
-    window.addEventListener('resize', updateIntroProgress)
     handleScroll()
-    updateIntroProgress()
     animateCursor()
 
     return () => {
@@ -141,27 +127,11 @@ export default function App() {
       document.body.classList.remove('has-custom-cursor')
       document.removeEventListener('pointermove', handlePointerMove)
       document.removeEventListener('scroll', handleScroll)
-      document.removeEventListener('scroll', updateIntroProgress)
-      window.removeEventListener('resize', updateIntroProgress)
     }
   }, [])
 
   return (
     <div className="page-shell">
-      <div className="architectural-intro" aria-hidden="true">
-        <div className="architectural-planes">
-          <span className="architectural-panel panel-one" />
-          <span className="architectural-panel panel-two" />
-          <span className="architectural-panel panel-three" />
-          <span className="architectural-panel panel-four" />
-          <div className="architectural-logo-wrap">
-            <img src={brandLogo} alt="ART MATANZAS" className="architectural-logo" />
-          </div>
-          <span className="architectural-accent" />
-          <span className="architectural-signature">AM/26</span>
-        </div>
-      </div>
-
       <div id="custom-cursor" className="custom-cursor" aria-hidden="true" />
       <Header />
 
