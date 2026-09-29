@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import Header from './components/Header'
-import brandLogo from './Assets/Logos/art-matanzas-horizontal.png'
+import circleLogo from './Assets/Logos/art-matanzas-logo.png'
 import seasonOnePhoto from './Assets/Fotos/POST 3.png'
 import seasonTwoPhoto from './Assets/Fotos/Imagen de ChatGPT 28 sept 2026, 05_06_15 p.m..png'
 import territoryPhoto from './Assets/Fotos/ChatGPT Image 17 sept 2026, 11_20_22 a.m..png'
@@ -10,6 +10,8 @@ export default function App() {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     const pointerFine = window.matchMedia('(pointer: fine)')
     const intro = document.querySelector('.architectural-intro')
+    let introFrameId = null
+    let introTimeoutId = null
 
     const updateIntroProgress = () => {
       if (!intro) {
@@ -19,6 +21,69 @@ export default function App() {
       const maxScroll = window.innerHeight * 0.9
       const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll))
       intro.style.setProperty('--intro-progress', progress.toFixed(3))
+    }
+
+    const easeOutBack = (x) => {
+      const c1 = 1.70158
+      const c3 = c1 + 1
+      return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2)
+    }
+
+    const startIntroSequence = () => {
+      if (!intro) {
+        return
+      }
+
+      const finishIntro = () => {
+        if (!intro) {
+          return
+        }
+
+        intro.classList.add('is-finished')
+        intro.style.setProperty('--intro-progress', '1')
+      }
+
+      intro.classList.remove('is-finished')
+      intro.style.setProperty('--intro-progress', '0')
+
+      if (reducedMotion.matches) {
+        finishIntro()
+        return
+      }
+
+      introTimeoutId = window.setTimeout(() => {
+        const start = performance.now()
+        const duration = 2600
+
+        const animateIntro = (now) => {
+          const elapsed = now - start
+          const rawProgress = Math.min(1, elapsed / duration)
+          const progress = rawProgress
+
+          const bounceProgress = Math.min(1, progress / 0.38)
+          const bounceEase = easeOutBack(Math.min(1, bounceProgress))
+          const settleProgress = Math.max(0, (progress - 0.38) / 0.22)
+          const holdProgress = Math.max(0, (progress - 0.62) / 0.18)
+          const revealProgress = Math.max(0, (progress - 0.72) / 0.28)
+
+          const sealY = 20 * (1 - bounceEase)
+          const sealScale = 1.12 - (0.12 * Math.sin((progress / 0.38) * Math.PI))
+          const maskScale = 0.12 + (revealProgress * 8.5) + (holdProgress * 0.4)
+
+          intro.style.setProperty('--seal-y', `${sealY}px`)
+          intro.style.setProperty('--seal-scale', sealScale.toFixed(3))
+          intro.style.setProperty('--mask-scale', maskScale.toFixed(3))
+          intro.style.setProperty('--intro-progress', progress.toFixed(3))
+
+          if (progress < 1) {
+            introFrameId = window.requestAnimationFrame(animateIntro)
+          } else {
+            finishIntro()
+          }
+        }
+
+        introFrameId = window.requestAnimationFrame(animateIntro)
+      }, 180)
     }
 
     const sections = document.querySelectorAll('.section-shell')
@@ -47,12 +112,19 @@ export default function App() {
     document.addEventListener('scroll', updateIntroProgress, { passive: true })
     window.addEventListener('resize', updateIntroProgress)
     updateIntroProgress()
+    startIntroSequence()
 
     if (!pointerFine.matches) {
       return () => {
         revealObserver.disconnect()
         document.removeEventListener('scroll', updateIntroProgress)
         window.removeEventListener('resize', updateIntroProgress)
+        if (introTimeoutId) {
+          window.clearTimeout(introTimeoutId)
+        }
+        if (introFrameId) {
+          window.cancelAnimationFrame(introFrameId)
+        }
       }
     }
 
@@ -148,22 +220,21 @@ export default function App() {
       document.removeEventListener('scroll', handleScroll)
       document.removeEventListener('scroll', updateIntroProgress)
       window.removeEventListener('resize', updateIntroProgress)
+      if (introTimeoutId) {
+        window.clearTimeout(introTimeoutId)
+      }
+      if (introFrameId) {
+        window.cancelAnimationFrame(introFrameId)
+      }
     }
   }, [])
 
   return (
     <div className="page-shell">
       <div className="architectural-intro" aria-hidden="true">
-        <div className="architectural-planes">
-          <span className="architectural-panel panel-one" />
-          <span className="architectural-panel panel-two" />
-          <span className="architectural-panel panel-three" />
-          <span className="architectural-panel panel-four" />
-          <div className="architectural-logo-wrap">
-            <img src={brandLogo} alt="ART MATANZAS" className="architectural-logo" />
-          </div>
-          <span className="architectural-accent" />
-          <span className="architectural-signature">AM/26</span>
+        <div className="architectural-mask" />
+        <div className="architectural-logo-wrap">
+          <img src={circleLogo} alt="ART MATANZAS" className="architectural-logo" />
         </div>
       </div>
 

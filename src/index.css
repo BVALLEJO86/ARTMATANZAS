@@ -96,106 +96,55 @@ html {
 
 .architectural-intro {
   --intro-progress: 0;
+  --seal-y: 0px;
+  --seal-scale: 1;
+  --mask-scale: 0.12;
   position: fixed;
   inset: 0;
   z-index: 1200;
   pointer-events: none;
-  background: rgba(250, 250, 250, 0.96);
-  opacity: calc(1 - (var(--intro-progress) * 1.25));
+  background: #FAFAFA;
+  overflow: hidden;
+  opacity: 1;
   visibility: visible;
   transition: opacity 0.28s ease, visibility 0.28s ease;
 }
 
-.architectural-intro::after {
-  content: '';
+.architectural-intro.is-finished {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.architectural-mask {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, rgba(250, 250, 250, 0.12), rgba(250, 250, 250, 0));
-}
-
-.architectural-planes {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-}
-
-.architectural-panel {
-  position: absolute;
-  background: var(--black);
-  box-shadow: none;
-}
-
-.panel-one {
-  left: -8%;
-  top: 10%;
-  width: 34%;
-  height: 62%;
-  transform: translate3d(calc(-30px * (1 - var(--intro-progress))), 0, 0) skewX(-12deg);
-}
-
-.panel-two {
-  right: 15%;
-  top: 0;
-  width: 25%;
-  height: 54%;
-  transform: translate3d(calc(40px * (1 - var(--intro-progress))), calc(-40px * (1 - var(--intro-progress))), 0);
-}
-
-.panel-three {
-  right: 0;
-  bottom: 7%;
-  width: 32%;
-  height: 46%;
-  transform: translate3d(calc(80px * (1 - var(--intro-progress))), 0, 0) skewX(-18deg);
-}
-
-.panel-four {
-  left: 18%;
-  bottom: 0;
-  width: 46%;
-  height: 24%;
-  transform: translate3d(calc(-25px * (1 - var(--intro-progress))), calc(35px * (1 - var(--intro-progress))), 0) skewX(-18deg);
+  left: 50%;
+  top: 50%;
+  width: min(24vw, 320px);
+  height: min(24vw, 320px);
+  border-radius: 50%;
+  background: #FAFAFA;
+  transform: translate(-50%, -50%) scale(var(--mask-scale));
+  transform-origin: center;
+  z-index: 2;
 }
 
 .architectural-logo-wrap {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: min(48vw, 720px);
-  transform: translate(-50%, -50%) scale(calc(0.22 + (var(--intro-progress) * 1.6))) translateY(calc((1 - var(--intro-progress)) * 24px));
-  opacity: calc(0.15 + (var(--intro-progress) * 1.1));
-  filter: brightness(0) saturate(100%);
-  z-index: 2;
+  width: min(28vw, 320px);
+  transform: translate(-50%, -50%) translateY(var(--seal-y)) scale(var(--seal-scale));
+  z-index: 3;
+  opacity: calc(1 - (var(--intro-progress) * 0.95));
 }
 
 .architectural-logo {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.architectural-accent {
-  position: absolute;
-  left: 58%;
-  top: 35%;
-  width: 84px;
-  height: 1px;
-  background: #64CFE8;
-  opacity: calc(0.16 + (var(--intro-progress) * 0.9));
-  z-index: 3;
-}
-
-.architectural-signature {
-  position: absolute;
-  left: 63%;
-  bottom: 27%;
-  font-size: 0.6rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--black);
-  font-family: var(--font-body);
-  z-index: 3;
-  opacity: calc(0.2 + (var(--intro-progress) * 0.9));
+  border-radius: 50%;
+  background: transparent;
 }
 
 .editorial-page {
