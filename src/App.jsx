@@ -130,12 +130,108 @@ export default function App() {
     }
   }, [])
 
+  useEffect(() => {
+    const introCover = document.querySelector('.intro-cover')
+    const introShapes = Array.from(document.querySelectorAll('.intro-figure, .intro-logo'))
+
+    if (!introCover || introShapes.length === 0) {
+      return undefined
+    }
+
+    const handleIntroScroll = () => {
+      const maxScroll = window.innerHeight * 1.2
+      const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll))
+
+      introShapes.forEach((shape) => {
+        const driftX = Number(shape.dataset.driftX || 0) * progress
+        const driftY = Number(shape.dataset.driftY || 0) * progress
+        const shrink = 1 - progress * Number(shape.dataset.shrink || 0.16)
+        const fade = 1 - progress * Number(shape.dataset.fade || 0.9)
+        const rotate = Number(shape.dataset.rotate || 0) * progress
+
+        shape.style.transform = `translate3d(${driftX}px, ${driftY}px, 0) scale(${shrink}) rotate(${rotate}deg)`
+        shape.style.opacity = String(Math.max(0, fade))
+      })
+
+      introCover.classList.toggle('is-complete', progress >= 0.82)
+      introCover.style.setProperty('--intro-progress', progress.toFixed(3))
+    }
+
+    handleIntroScroll()
+    window.addEventListener('scroll', handleIntroScroll, { passive: true })
+    window.addEventListener('resize', handleIntroScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleIntroScroll)
+      window.removeEventListener('resize', handleIntroScroll)
+    }
+  }, [])
+
   return (
     <div className="page-shell">
       <div id="custom-cursor" className="custom-cursor" aria-hidden="true" />
       <Header />
 
       <main className="editorial-page">
+        <section className="intro-cover" aria-label="Portada de apertura">
+          <div className="intro-stage">
+            <div className="intro-grid" aria-hidden="true" />
+
+            <div
+              className="intro-figure intro-block intro-block-left"
+              data-drift-x="-80"
+              data-drift-y="-60"
+              data-shrink="0.18"
+              data-fade="1.1"
+              data-rotate="0"
+              aria-hidden="true"
+            />
+
+            <div
+              className="intro-figure intro-block intro-block-right"
+              data-drift-x="110"
+              data-drift-y="-90"
+              data-shrink="0.14"
+              data-fade="1.1"
+              data-rotate="-9"
+              aria-hidden="true"
+            />
+
+            <div
+              className="intro-figure intro-block intro-block-mid"
+              data-drift-x="0"
+              data-drift-y="-30"
+              data-shrink="0.12"
+              data-fade="1.1"
+              data-rotate="0"
+              aria-hidden="true"
+            />
+
+            <div
+              className="intro-figure intro-block intro-block-void"
+              data-drift-x="30"
+              data-drift-y="30"
+              data-shrink="0.1"
+              data-fade="1.1"
+              data-rotate="-12"
+              aria-hidden="true"
+            />
+
+            <div
+              className="intro-figure intro-bar"
+              data-drift-x="-50"
+              data-drift-y="20"
+              data-shrink="0.08"
+              data-fade="1.1"
+              data-rotate="0"
+              aria-hidden="true"
+            />
+
+            <div className="intro-accent" aria-hidden="true" />
+            <div className="intro-logo" aria-hidden="true">ART MATANZAS</div>
+          </div>
+        </section>
+
         <section id="inicio" className="hero">
           <div className="hero-geometry" aria-hidden="true">
             <span className="hero-geo hero-geo-circle" data-parallax-hero="0.10" />
