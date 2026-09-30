@@ -1,20 +1,31 @@
 import { useState } from 'react'
 import logo from '../Assets/Logos/art-matanzas-horizontal.png'
+import { Link } from '../lib/router'
 
-export default function Header() {
+const HOME_LINKS = [
+  { href: '#temporada', label: 'TEMPORADA' },
+  { href: '#territorio', label: 'TERRITORIO' },
+  { href: '#participar', label: 'PARTICIPAR' },
+  { href: '#prensa', label: 'PRENSA' }
+]
+
+export default function Header({ links = HOME_LINKS, brandHref = '#inicio' }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const BrandLink = brandHref.startsWith('/') ? Link : 'a'
+  const brandProps = brandHref.startsWith('/') ? { to: brandHref } : { href: brandHref }
 
   return (
     <header className="site-header">
-      <a href="#inicio" className="brand-block" aria-label="Volver al inicio">
+      <BrandLink {...brandProps} className="brand-block" aria-label="Volver al inicio">
         <img src={logo} alt="ART MATANZAS" className="brand-logo" />
-      </a>
+      </BrandLink>
 
       <nav className={`main-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Navegación principal">
-        <a href="#temporada">TEMPORADA</a>
-        <a href="#territorio">TERRITORIO</a>
-        <a href="#participar">PARTICIPAR</a>
-        <a href="#prensa">PRENSA</a>
+        {links.map((link) => (
+          <a key={link.href} href={link.href} onClick={() => setIsMenuOpen(false)}>
+            {link.label}
+          </a>
+        ))}
       </nav>
 
       <button
