@@ -25,7 +25,13 @@ export default function Intro() {
       return
     }
 
+    const signalDone = () => {
+      window.__amIntroDone = true
+      window.dispatchEvent(new Event('am:intro-done'))
+    }
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      signalDone()
       setIsDone(true)
       return
     }
@@ -41,8 +47,6 @@ export default function Intro() {
       const body = bodyRef.current
       const disc = discRef.current
       const fragments = fragmentRefs.current
-      // Único elemento externo: el título del hero, para su microentrada tras el corte.
-      const heroTitle = document.querySelector('#inicio .hero-title')
 
       const d = stageRef.current.offsetWidth
       // Recorrido vertical corto, proporcional al logo y acotado al viewport.
@@ -98,14 +102,8 @@ export default function Intro() {
       tl.addLabel('exit', 'return+=0.9')
         .set(root, { visibility: 'hidden' }, 'exit')
         .call(releaseScroll, null, 'exit')
-      if (heroTitle) {
-        tl.fromTo(
-          heroTitle,
-          { y: 16, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out', clearProps: 'transform,opacity' },
-          'exit'
-        )
-      }
+        // Avisa al hero para que arranque su entrada justo tras el corte.
+        .call(signalDone, null, 'exit')
     }, root)
 
     return () => {

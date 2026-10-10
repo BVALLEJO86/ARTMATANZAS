@@ -5,22 +5,25 @@ const AXES = [
   { index: '04', label: 'COMUNICACIONAL', text: 'Registro, contenidos y construcción de una identidad cultural reconocible.' }
 ]
 
+const LINES = ['CULTURA.', 'TURISMO.', 'ECONOMÍA LOCAL.', 'VISIBILIDAD.']
+
 export default function Impact() {
   return (
-    <section id="impacto" className="section-shell impact-section">
-      <p className="eyebrow">Impacto</p>
-      <h2 className="display-title impact-title">
-        <span>CULTURA.</span>
-        <span>TURISMO.</span>
-        <span>ECONOMÍA LOCAL.</span>
-        <span>VISIBILIDAD.</span>
+    <section id="impacto" className="p-section p-impact">
+      <p className="p-label" data-fade>(006) Impacto</p>
+      <h2 className="p-impact-title" aria-label={LINES.join(' ')}>
+        {LINES.map((line, index) => (
+          <span key={line} className="p-impact-line" data-slide={index % 2 ? 1 : -1} aria-hidden="true">
+            {line}
+          </span>
+        ))}
       </h2>
 
-      <ol className="impact-axes">
+      <ol className="p-axes" data-stagger>
         {AXES.map((axis) => (
-          <li key={axis.index} className="impact-axis">
-            <span className="impact-index">{axis.index}</span>
-            <span className="impact-label">{axis.label}</span>
+          <li key={axis.index} className="p-axis" data-stagger-item>
+            <span className="p-axis-index">{axis.index}</span>
+            <span className="p-axis-label">{axis.label}</span>
             <p>{axis.text}</p>
           </li>
         ))}

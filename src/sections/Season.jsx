@@ -1,69 +1,47 @@
-import seasonOnePhoto from '../Assets/Fotos/POST 3.png'
-import seasonTwoPhoto from '../Assets/Fotos/Imagen de ChatGPT 28 sept 2026, 05_06_15 p.m..png'
+import { ENCOUNTERS, VENUE } from '../data/season'
 
 export default function Season() {
   return (
-    <section id="temporada" className="section-shell season-section">
-      <div className="section-heading">
-        <p className="eyebrow">Temporada inaugural</p>
-        <h2>
-          TRES ENCUENTROS.
-          <span>UN MISMO RECORRIDO.</span>
+    <section id="temporada" className="p-section p-season">
+      <div className="p-season-head">
+        <p className="p-label" data-fade>(003) Temporada inaugural</p>
+        <h2 className="p-display p-season-title" data-split>
+          TRES ENCUENTROS. UN MISMO RECORRIDO.
         </h2>
+        <p className="p-label p-season-venue" data-fade>SEDE · {VENUE}</p>
       </div>
 
-      <div className="encounters">
-        <article className="encounter encounter-one">
-          <div className="encounter-meta">
-            <span className="encounter-index">01</span>
-            <span className="encounter-label">MIRAR</span>
-            <span className="encounter-date">15 OCT 2026</span>
-          </div>
-
-          <div className="encounter-body">
-            <div className="encounter-name">RAÚL SALVESTRINI</div>
-          </div>
-
-          <div className="encounter-visual" data-parallax="0.12" aria-label="Fotografía del encuentro 01">
-            <img src={seasonOnePhoto} alt="Raúl Salvestrini en el encuentro MIRAR" />
-          </div>
-        </article>
-
-        <article className="encounter encounter-two">
-          <div className="encounter-meta">
-            <span className="encounter-index">02</span>
-            <span className="encounter-label">HABITAR</span>
-            <span className="encounter-date">12 NOV 2026</span>
-          </div>
-
-          <div className="encounter-body">
-            <div className="encounter-name">LEONARDO PORTUS</div>
-          </div>
-
-          <div className="encounter-visual" data-parallax="0.18" aria-label="Fotografía del encuentro 02">
-            <img src={seasonTwoPhoto} alt="Leonardo Portus en el encuentro HABITAR" />
-          </div>
-        </article>
-
-        <article className="encounter encounter-three">
-          <div className="encounter-meta">
-            <span className="encounter-index">03</span>
-            <span className="encounter-label">DEJAR HUELLA</span>
-            <span className="encounter-date">10 DIC 2026</span>
-          </div>
-
-          <div className="encounter-body">
-            <div className="encounter-name">JORGE CAMPOS / PIXELART</div>
-          </div>
-
-          <div className="encounter-visual">
-            <div className="encounter-placeholder" role="img" aria-label="Imagen del encuentro 03 en actualización">
-              <span className="encounter-placeholder-index">03</span>
-              <span className="encounter-placeholder-note">IMAGEN / PROGRAMACIÓN EN ACTUALIZACIÓN</span>
+      <ol className="p-encounters">
+        {ENCOUNTERS.map((item) => (
+          <li
+            key={item.index}
+            className="p-encounter"
+            style={{ '--tone': item.color }}
+            data-encounter
+            data-cursor={item.image ? 'VER' : undefined}
+          >
+            <span className="p-encounter-fill" aria-hidden="true" />
+            <div className="p-encounter-meta">
+              <span className="p-encounter-index">{item.index}</span>
+              <span className="p-label">{item.dateLabel}</span>
             </div>
-          </div>
-        </article>
-      </div>
+            <div className="p-encounter-main">
+              <span className="p-encounter-label">{item.label}</span>
+              <h3 className="p-encounter-name">{item.name}</h3>
+            </div>
+            <div className="p-encounter-media" data-reveal-media>
+              {item.image ? (
+                <img src={item.image} alt={item.imageAlt} loading="lazy" data-media-img />
+              ) : (
+                <div className="p-encounter-placeholder" role="img" aria-label="Imagen del encuentro 03 en actualización">
+                  <span>{item.index}</span>
+                  <small>IMAGEN / PROGRAMACIÓN EN ACTUALIZACIÓN</small>
+                </div>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
     </section>
   )
 }

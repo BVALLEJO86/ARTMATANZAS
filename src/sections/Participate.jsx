@@ -1,22 +1,26 @@
 const ROLES = ['CREADORES', 'ALIADOS', 'COLABORADORES', 'OPERADORES DEL TERRITORIO']
 
-// Dos escalas en una misma composición: el statement mayor y el trabajo colectivo desplazado en la grilla.
+const LINKS = [
+  { href: '#temporada', label: 'ASISTIR A UN ENCUENTRO' },
+  { href: '#territorio', label: 'CREADORES DEL TERRITORIO' },
+  { href: '#prensa', label: 'ALIANZAS Y COLABORACIONES' }
+]
+
 export default function Participate() {
   return (
-    <section id="participar" className="section-shell participate-section">
-      <p className="eyebrow">Participar</p>
-      <h2 className="display-title participate-title">PARTICIPAR ES SER PARTE.</h2>
+    <section id="participar" className="p-section p-participate">
+      <p className="p-label" data-fade>(007) Participar</p>
+      <h2 className="p-display p-participate-title" data-split>PARTICIPAR ES SER PARTE.</h2>
 
-      <div className="participate-grid">
-        <div className="participate-aside">
-          <p className="editorial-copy">
+      <div className="p-grid p-participate-grid">
+        <div className="p-participate-aside">
+          <p className="p-copy" data-fade>
             Artistas, habitantes, creadores y visitantes. La temporada inaugural está abierta a
             encontrarnos.
           </p>
-
-          <ol className="participate-roles" aria-label="Posibles vínculos">
+          <ol className="p-roles" aria-label="Posibles vínculos" data-stagger>
             {ROLES.map((role, index) => (
-              <li key={role}>
+              <li key={role} data-stagger-item>
                 <span>{String(index + 1).padStart(2, '0')}</span>
                 {role}
               </li>
@@ -24,13 +28,18 @@ export default function Participate() {
           </ol>
         </div>
 
-        <div className="participate-main">
-          <p className="display-title participate-statement">CONSTRUIR ART MATANZAS ES UN TRABAJO COLECTIVO.</p>
-
-          <nav className="participate-links" aria-label="Participar en la temporada">
-            <a href="#temporada">ASISTIR A UN ENCUENTRO</a>
-            <a href="#territorio">CREADORES DEL TERRITORIO</a>
-            <a href="#prensa">ALIANZAS Y COLABORACIONES</a>
+        <div className="p-participate-main">
+          <p className="p-participate-statement" data-fade>
+            CONSTRUIR ART MATANZAS ES UN TRABAJO COLECTIVO.
+          </p>
+          <nav className="p-rows" aria-label="Participar en la temporada">
+            {LINKS.map((link, index) => (
+              <a key={link.href} href={link.href} className="p-row" data-fade>
+                <span className="p-row-index">{String(index + 1).padStart(2, '0')}</span>
+                <span className="p-row-label">{link.label}</span>
+                <span className="p-row-arrow" aria-hidden="true">→</span>
+              </a>
+            ))}
           </nav>
         </div>
       </div>

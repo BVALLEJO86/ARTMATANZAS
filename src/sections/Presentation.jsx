@@ -1,10 +1,12 @@
 export default function Presentation() {
   return (
-    <section id="proyecto" className="section-shell presentation-section">
-      <div className="editorial-grid">
-        <p className="eyebrow editorial-label">ART MATANZAS</p>
-        <h2 className="display-title presentation-title">UNA PLATAFORMA CULTURAL PARA MATANZAS.</h2>
-        <p className="editorial-copy presentation-copy">
+    <section id="proyecto" className="p-section p-presentation">
+      <div className="p-grid">
+        <p className="p-label p-col-label" data-fade>(001) ART MATANZAS</p>
+        <h2 className="p-display p-presentation-title" data-split>
+          UNA PLATAFORMA CULTURAL PARA MATANZAS.
+        </h2>
+        <p className="p-copy p-presentation-copy" data-fade>
           ART MATANZAS articula arte contemporáneo, territorio y comunidad a través de encuentros,
           exposiciones, talleres, conversatorios y experiencias vinculadas al territorio.
         </p>

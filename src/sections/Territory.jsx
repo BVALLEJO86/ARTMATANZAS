@@ -1,18 +1,31 @@
 export default function Territory() {
   return (
-    <section id="territorio" className="section-shell territory-section">
-      <div className="section-heading territory-heading">
-        <p className="eyebrow">Territorio</p>
-        <h2>MATANZAS NO ES UNA POSTAL.</h2>
+    <section id="territorio" className="p-territory" data-territory>
+      <div className="p-section p-territory-head">
+        <p className="p-label" data-fade>(004) Territorio</p>
       </div>
 
-      <div className="territory-copy">
-        <p>
+      <h2 className="p-territory-title" aria-label="Matanzas no es una postal.">
+        <span className="p-territory-row" data-drift="-1" aria-hidden="true">MATANZAS NO ES</span>
+        <span className="p-territory-row p-territory-row-alt" data-drift="1" aria-hidden="true">
+          UNA <span className="p-outline">POSTAL.</span>
+        </span>
+      </h2>
+
+      <div className="p-section p-grid p-territory-body">
+        <ul className="p-territory-words" aria-label="Elementos del territorio" data-fade>
+          {['MAR', 'VIENTO', 'OFICIOS', 'COMUNIDAD', 'MEMORIA'].map((word, index) => (
+            <li key={word}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              {word}
+            </li>
+          ))}
+        </ul>
+        <p className="p-copy p-territory-copy" data-fade>
           Es un territorio vivo: mar, viento, oficios, comunidad y memoria. ART MATANZAS propone vivir
           el arte desde ese contexto, conectando creación contemporánea y experiencia local.
         </p>
       </div>
-
     </section>
   )
 }

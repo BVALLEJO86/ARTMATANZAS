@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import RutaLocal, { RUTA_LOCAL_LINKS } from './pages/RutaLocal'
 import { usePath } from './lib/router'
 import { useCustomCursor, usePageEffects } from './hooks/useEditorialEffects'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 
 const isRutaLocal = (path) => path.replace(/\/+$/, '') === '/ruta-local'
 
@@ -15,12 +16,15 @@ export default function App() {
   const onRutaLocal = isRutaLocal(path)
 
   useCustomCursor()
+  useSmoothScroll()
   usePageEffects(path)
 
   useEffect(() => {
     const target = window.location.hash && document.querySelector(window.location.hash)
     if (target) {
       target.scrollIntoView()
+    } else if (window.__lenis) {
+      window.__lenis.scrollTo(0, { immediate: true })
     } else {
       window.scrollTo(0, 0)
     }
@@ -39,9 +43,9 @@ export default function App() {
       {onRutaLocal ? <RutaLocal /> : <Home />}
 
       <footer className="site-footer">
-        <div>ART MATANZAS 2026</div>
+        <div>ART MATANZAS · TEMPORADA 2026</div>
         <div>MATANZAS · CHILE</div>
-        <div>2026</div>
+        <a href="#inicio" className="site-footer-top">VOLVER ARRIBA ↑</a>
       </footer>
     </div>
   )

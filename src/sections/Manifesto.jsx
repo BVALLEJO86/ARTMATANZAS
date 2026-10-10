@@ -1,9 +1,16 @@
+const TEXT = 'EL ARTE AL CENTRO. MATANZAS COMO PARTE ACTIVA DE LA EXPERIENCIA.'
+
+// Las palabras se "encienden" a medida que se hace scroll (ver usePremiumMotion).
 export default function Manifesto() {
   return (
-    <section className="section-shell manifesto-section" aria-label="Manifiesto">
-      <p className="manifesto-statement">
-        <span className="manifesto-line">EL ARTE AL CENTRO.</span>
-        <span className="manifesto-line manifesto-line-shift">MATANZAS COMO PARTE ACTIVA DE LA EXPERIENCIA.</span>
+    <section className="p-section p-manifesto" aria-label="Manifiesto" data-manifesto>
+      <p className="p-label" data-fade>(002) Manifiesto</p>
+      <p className="p-manifesto-text" aria-label={TEXT}>
+        {TEXT.split(' ').map((word, index) => (
+          <span key={`${word}-${index}`} className="p-word" data-word aria-hidden="true">
+            {word}{' '}
+          </span>
+        ))}
       </p>
     </section>
   )

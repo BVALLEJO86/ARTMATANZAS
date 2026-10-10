@@ -96,17 +96,20 @@ export function useCustomCursor() {
 
     // Delegación: funciona también con los elementos que aparecen al cambiar de página.
     const handlePointerOver = (event) => {
-      cursor.classList.toggle('is-hovering', Boolean(event.target.closest?.(INTERACTIVE)))
+      const labelled = event.target.closest?.('[data-cursor]')
+      cursor.textContent = labelled ? labelled.dataset.cursor : ''
+      cursor.classList.toggle('has-label', Boolean(labelled))
+      cursor.classList.toggle('is-hovering', !labelled && Boolean(event.target.closest?.(INTERACTIVE)))
     }
 
     const animateCursor = () => {
       cursorX += (mouseX - cursorX) * 0.12
       cursorY += (mouseY - cursorY) * 0.12
-      const nextSize = cursor.classList.contains('is-hovering') ? 30 : 12
+      const nextSize = cursor.classList.contains('has-label') ? 88 : cursor.classList.contains('is-hovering') ? 30 : 12
       currentSize += (nextSize - currentSize) * 0.18
       cursor.style.width = `${currentSize}px`
       cursor.style.height = `${currentSize}px`
-      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`
+      cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`
       frameId = requestAnimationFrame(animateCursor)
     }
 

@@ -9,11 +9,28 @@ import Participate from '../sections/Participate'
 import Host from '../sections/Host'
 import Closing from '../sections/Closing'
 import Press from '../sections/Press'
+import Marquee from '../components/Marquee'
+import { usePremiumMotion } from '../hooks/usePremiumMotion'
+
+const SEASON_TICKER = [
+  { text: 'MIRAR · 15 OCT', color: 'var(--cyan)' },
+  { text: 'HABITAR · 12 NOV', color: 'var(--yellow)' },
+  { text: 'DEJAR HUELLA · 10 DIC', color: 'var(--red)' }
+]
+
+const TERRITORY_TICKER = [
+  { text: 'ARTE CONTEMPORÁNEO', color: 'var(--yellow)' },
+  { text: 'TERRITORIO', color: 'var(--cyan)' },
+  { text: 'COMUNIDAD', color: 'var(--red)' }
+]
 
 export default function Home() {
+  usePremiumMotion()
+
   return (
-    <main className="editorial-page">
+    <main className="editorial-page p-page">
       <Hero />
+      <Marquee items={SEASON_TICKER} />
       <Presentation />
       <Manifesto />
       <Season />
@@ -21,6 +38,7 @@ export default function Home() {
       <RouteTeaser />
       <Impact />
       <Participate />
+      <Marquee items={TERRITORY_TICKER} tone="light" />
       <Host />
       <Closing />
       <Press />

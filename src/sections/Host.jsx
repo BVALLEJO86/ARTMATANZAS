@@ -1,12 +1,15 @@
 export default function Host() {
   return (
-    <section id="sede" className="section-shell host-section">
-      <div className="host-grid">
-        <div className="host-name">
-          <p className="eyebrow host-label">SEDE ANFITRIONA</p>
-          <h2 className="display-title host-title">HOTEL MAR BLANCO</h2>
-        </div>
-        <p className="editorial-copy host-copy">
+    <section id="sede" className="p-host">
+      <div className="p-section">
+        <p className="p-label" data-fade>(008) Sede anfitriona</p>
+      </div>
+      <h2 className="p-host-title" data-host-title aria-label="Hotel Mar Blanco">
+        <span aria-hidden="true">HOTEL</span>
+        <span aria-hidden="true">MAR BLANCO</span>
+      </h2>
+      <div className="p-section p-grid">
+        <p className="p-copy p-host-copy" data-fade>
           Infraestructura, hospitalidad y espacio que habilitan encuentros, talleres y actividades
           vinculadas al territorio.
         </p>
