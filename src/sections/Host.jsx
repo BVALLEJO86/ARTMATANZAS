@@ -2,7 +2,7 @@ export default function Host() {
   return (
     <section id="sede" className="p-host">
       <div className="p-section">
-        <p className="p-label" data-fade>(008) Sede anfitriona</p>
+        <p className="p-label" data-fade>Sede anfitriona</p>
       </div>
       <h2 className="p-host-title" data-host-title aria-label="Hotel Mar Blanco">
         <span aria-hidden="true">HOTEL</span>

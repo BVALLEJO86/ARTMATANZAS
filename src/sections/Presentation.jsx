@@ -2,7 +2,7 @@ export default function Presentation() {
   return (
     <section id="proyecto" className="p-section p-presentation">
       <div className="p-grid">
-        <p className="p-label p-col-label" data-fade>(001) ART MATANZAS</p>
+        <p className="p-label p-col-label" data-fade>ART MATANZAS</p>
         <h2 className="p-display p-presentation-title" data-split>
           UNA PLATAFORMA CULTURAL PARA MATANZAS.
         </h2>

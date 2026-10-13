@@ -5,7 +5,7 @@ export default function Press() {
     <section id="prensa" className="p-press">
       <div className="p-section p-press-inner">
         <div className="p-press-head">
-          <p className="p-label" data-fade>(009) Prensa y contacto</p>
+          <p className="p-label" data-fade>Prensa y contacto</p>
           <p className="p-copy" data-fade>Información, acreditaciones y material de difusión.</p>
         </div>
         <a href="mailto:contacto@artmatanzas.cl" className="p-press-mail" data-cursor="ESCRIBIR" data-fade>

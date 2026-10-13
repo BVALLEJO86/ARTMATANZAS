@@ -1,14 +1,13 @@
-import { ENCOUNTERS, VENUE } from '../data/season'
+import { ENCOUNTERS } from '../data/season'
 
 export default function Season() {
   return (
     <section id="temporada" className="p-section p-season">
       <div className="p-season-head">
-        <p className="p-label" data-fade>(003) Temporada inaugural</p>
+        <p className="p-label" data-fade>Temporada inaugural</p>
         <h2 className="p-display p-season-title" data-split>
           TRES ENCUENTROS. UN MISMO RECORRIDO.
         </h2>
-        <p className="p-label p-season-venue" data-fade>SEDE · {VENUE}</p>
       </div>
 
       <ol className="p-encounters">

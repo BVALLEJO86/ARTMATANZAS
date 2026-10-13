@@ -9,7 +9,7 @@ const LINKS = [
 export default function Participate() {
   return (
     <section id="participar" className="p-section p-participate">
-      <p className="p-label" data-fade>(007) Participar</p>
+      <p className="p-label" data-fade>Participar</p>
       <h2 className="p-display p-participate-title" data-split>PARTICIPAR ES SER PARTE.</h2>
 
       <div className="p-grid p-participate-grid">
@@ -29,9 +29,6 @@ export default function Participate() {
         </div>
 
         <div className="p-participate-main">
-          <p className="p-participate-statement" data-fade>
-            CONSTRUIR ART MATANZAS ES UN TRABAJO COLECTIVO.
-          </p>
           <nav className="p-rows" aria-label="Participar en la temporada">
             {LINKS.map((link, index) => (
               <a key={link.href} href={link.href} className="p-row" data-fade>

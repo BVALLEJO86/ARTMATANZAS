@@ -161,9 +161,9 @@ export function usePremiumMotion() {
           const dir = Number(row.dataset.drift)
           gsap.fromTo(
             row,
-            { xPercent: dir * -12 },
+            { xPercent: 0 },
             {
-              xPercent: dir * 8,
+              xPercent: dir * -5,
               ease: 'none',
               scrollTrigger: { trigger: '[data-territory]', start: 'top bottom', end: 'bottom top', scrub: true }
             }

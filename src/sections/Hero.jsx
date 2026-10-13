@@ -26,9 +26,6 @@ export default function Hero() {
     <section id="inicio" className="p-hero" data-hero>
       <div className="p-hero-top">
         <p className="p-label" data-hero-fade>TEMPORADA INAUGURAL · 2026</p>
-        <p className="p-label p-hero-lede" data-hero-fade>
-          Arte contemporáneo, territorio y comunidad
-        </p>
         <p className="p-label p-hero-coords" data-hero-fade>33°57′ S · MATANZAS · CHILE</p>
       </div>
 

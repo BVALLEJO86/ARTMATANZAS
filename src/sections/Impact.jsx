@@ -10,7 +10,7 @@ const LINES = ['CULTURA.', 'TURISMO.', 'ECONOMÍA LOCAL.', 'VISIBILIDAD.']
 export default function Impact() {
   return (
     <section id="impacto" className="p-section p-impact">
-      <p className="p-label" data-fade>(006) Impacto</p>
+      <p className="p-label" data-fade>Impacto</p>
       <h2 className="p-impact-title" aria-label={LINES.join(' ')}>
         {LINES.map((line, index) => (
           <span key={line} className="p-impact-line" data-slide={index % 2 ? 1 : -1} aria-hidden="true">

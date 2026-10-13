@@ -6,7 +6,7 @@ export default function RouteTeaser() {
   return (
     <section id="ruta-local" className="p-route">
       <div className="p-section p-grid">
-        <p className="p-label p-col-label" data-fade>(005) Ruta Local ART MATANZAS</p>
+        <p className="p-label p-col-label" data-fade>Ruta Local ART MATANZAS</p>
         <h2 className="p-display p-route-title" data-split>
           DE LA PROGRAMACIÓN AL TERRITORIO.
         </h2>
