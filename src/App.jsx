@@ -9,7 +9,7 @@ import { useCustomCursor, usePageEffects } from './hooks/useEditorialEffects'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
 import MailToast from './components/MailToast'
 
-const isRutaLocal = (path) => path.replace(/\/+$/, '') === '/ruta-local'
+const isRutaLocal = (path) => /^\/ruta-local(\.html)?\/?$/.test(path)
 
 // "Volver arriba" funciona en ambas páginas (Ruta Local no tiene #inicio).
 function scrollToTop(event) {
