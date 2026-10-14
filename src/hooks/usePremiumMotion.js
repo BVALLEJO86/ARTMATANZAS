@@ -141,7 +141,7 @@ export function usePremiumMotion() {
           const media = row.querySelector('[data-reveal-media]')
           const img = row.querySelector('[data-media-img]')
           const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 80%', once: true } })
-          tl.from(row.querySelectorAll('.p-encounter-name, .p-encounter-label, .p-encounter-meta'), {
+          tl.from(row.querySelectorAll('.p-enc-index, .p-enc-label, .p-enc-name, .p-enc-date, .p-ig'), {
             yPercent: 60,
             autoAlpha: 0,
             duration: 1.1,
@@ -153,20 +153,9 @@ export function usePremiumMotion() {
             { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut' },
             0.1
           )
-          const bar = row.querySelector('[data-bar]')
-          if (bar) tl.from(bar, { scaleY: 0, duration: 1.2, ease: 'expo.inOut' }, 0.7)
-          if (img) {
-            tl.from(img, { scale: 1.35, duration: 1.8, ease: EASE }, 0.1)
-            gsap.fromTo(
-              img,
-              { yPercent: -6 },
-              {
-                yPercent: 6,
-                ease: 'none',
-                scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true }
-              }
-            )
-          }
+          if (img) tl.from(img, { scale: 1.2, duration: 1.8, ease: EASE }, 0.1)
+          // El color aparece cuando el encuentro pasa por el centro de la pantalla.
+          ScrollTrigger.create({ trigger: row, start: 'top 55%', end: 'bottom 45%', toggleClass: 'is-active' })
         })
 
         /* ---------- IMÁGENES SUELTAS (sede) ---------- */

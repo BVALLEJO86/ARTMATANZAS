@@ -15,7 +15,7 @@ export const ENCOUNTERS = [
     instagram: 'raulsalvestrini',
     color: 'var(--cyan)',
     image: photoOne,
-    imageAlt: 'Retrato de Raúl Salvestrini'
+    imageAlt: 'Raúl Salvestrini junto a una de sus pinturas'
   },
   {
     index: '02',
@@ -27,7 +27,7 @@ export const ENCOUNTERS = [
     instagram: 'leonardo.portus',
     color: 'var(--yellow)',
     image: photoTwo,
-    imageAlt: 'Retrato de Leonardo Portus'
+    imageAlt: 'Leonardo Portus junto a su maqueta del edificio Lido'
   },
   {
     index: '03',
@@ -39,7 +39,7 @@ export const ENCOUNTERS = [
     instagram: 'fabciraolo',
     color: 'var(--red)',
     image: photoThree,
-    imageAlt: 'Fab Ciraolo frente a un mural'
+    imageAlt: 'Fab Ciraolo junto a una de sus ilustraciones'
   }
 ]
 
