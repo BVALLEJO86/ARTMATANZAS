@@ -164,18 +164,23 @@ function Place({ place, index, added, onToggle }) {
 
 export default function RutaLocal() {
   const { ids, toggle } = useMyRoute()
-  const [filter, setFilter] = useState('todos')
+  const [filter, setFilter] = useState('ninguno')
   const [locality, setLocality] = useState(null)
   const pageRef = useRef(null)
   const listRef = useRef(null)
   const firstRender = useRef(true)
 
-  const visible = PLACES.filter(
-    (place) => (filter === 'todos' || place.type === filter) && (!locality || place.locality === locality)
-  )
+  // Parte en "Ninguno" (00): la lista aparece cuando se elige una categoría o una localidad.
+  const visible =
+    filter === 'ninguno'
+      ? []
+      : PLACES.filter(
+          (place) => (filter === 'todos' || place.type === filter) && (!locality || place.locality === locality)
+        )
   const myPlaces = PLACES.filter((place) => ids.includes(place.id))
   const inLocality = (loc) => PLACES.filter((place) => place.locality === loc)
   const filters = [
+    { id: 'ninguno', label: 'Ninguno', n: 0 },
     { id: 'todos', label: 'Todos', n: PLACES.length },
     ...TYPES.map((t) => ({ ...t, n: PLACES.filter((place) => place.type === t.id).length }))
   ]
@@ -625,7 +630,10 @@ export default function RutaLocal() {
                   <button
                     type="button"
                     className="rl-station-btn"
-                    onClick={() => setLocality(loc)}
+                    onClick={() => {
+                      setLocality(loc)
+                      setFilter((current) => (current === 'ninguno' ? 'todos' : current))
+                    }}
                     data-cursor="VER"
                     aria-label={`Ver los ${places.length} lugares de ${titleCase(loc)}`}
                   >
@@ -691,8 +699,9 @@ export default function RutaLocal() {
                 aria-pressed={filter === f.id}
                 onClick={(event) => choose(f.id, event)}
                 style={{ '--type': TYPE_COLOR[f.id] || 'var(--black)' }}
+                data-neutral={TYPE_COLOR[f.id] ? undefined : ''}
               >
-                {f.id !== 'todos' && <i aria-hidden="true" />}
+                {f.id !== 'todos' && f.id !== 'ninguno' && <i aria-hidden="true" />}
                 {f.label}
                 <sup>{pad(f.n)}</sup>
               </button>
@@ -715,7 +724,16 @@ export default function RutaLocal() {
               />
             ))}
           </ol>
-          {!visible.length && <p className="rl-empty">No hay lugares de este tipo en {titleCase(locality || '')}.</p>}
+          {filter === 'ninguno' ? (
+            <div className="rl-start">
+              <p className="rl-start-text">Elige qué buscas: dónde dormir, dónde comer, qué recorrer o qué llevarte.</p>
+              <button type="button" className="rl-start-all" onClick={(event) => choose('todos', event)} data-cursor="VER">
+                Ver los {PLACES.length} lugares <Arrow dir="down" />
+              </button>
+            </div>
+          ) : (
+            !visible.length && <p className="rl-empty">No hay lugares de este tipo en {titleCase(locality || '')}.</p>
+          )}
         </div>
       </section>
 
@@ -776,7 +794,8 @@ export default function RutaLocal() {
                     className="rl-agenda-row"
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-cursor="INSTAGRAM"
+                    data-cursor="VER IG"
+                    data-cursor-color={item.color === 'var(--cyan)' ? 'var(--red)' : undefined}
                     aria-label={`${item.label}: ${item.name}, ${item.dateLabel}. Ver Instagram`}
                   >
                     <span className="rl-agenda-date">

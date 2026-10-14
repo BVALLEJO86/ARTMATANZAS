@@ -1282,3 +1282,45 @@
 
 /* Píldora centrada abajo: no tapa los botones Guardar */
 .rl-page .rl-pill { right: auto; left: 50%; translate: -50% 0; }
+
+/* Directorio: parte en "Ninguno 00" */
+.rl-page .rl-filter[data-neutral][aria-pressed='true'] { color: var(--bg); }
+
+.rl-page .rl-start {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4rem 2rem;
+  padding: clamp(2rem, 4vw, 3.4rem) 0;
+  border-bottom: 1px solid var(--rl-rule);
+}
+
+.rl-page .rl-start-text {
+  max-width: 34rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--rl-muted);
+}
+
+.rl-page .rl-start-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0 0 0.35rem;
+  border: 0;
+  border-bottom: 1px solid currentColor;
+  background: none;
+  color: var(--black);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.rl-page .rl-start-all .p-arrow { transition: translate 0.5s var(--ease-out); }
+.rl-page .rl-start-all:hover .p-arrow { translate: 0 3px; }
+.rl-page .rl-start-all:focus-visible { outline: 2px solid var(--black); outline-offset: 4px; }
