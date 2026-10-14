@@ -555,6 +555,18 @@ export default function RutaLocal() {
     return () => io.disconnect()
   }, [])
 
+  // Sin cursor (celular/tablet): la ficha que cruza el centro de la pantalla toma su color, como al pasar el cursor.
+  useEffect(() => {
+    if (!window.matchMedia('(hover: none), (pointer: coarse)').matches || !('IntersectionObserver' in window)) return undefined
+    const rows = listRef.current?.querySelectorAll('.rl-place') || []
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.target.classList.toggle('is-active', entry.isIntersecting)),
+      { rootMargin: '-45% 0px -45% 0px' }
+    )
+    rows.forEach((row) => io.observe(row))
+    return () => io.disconnect()
+  }, [filter, locality])
+
   // Lista: primera carga fila a fila; al filtrar, vuelve bajo la barra y entra en cascada.
   useLayoutEffect(() => {
     const list = listRef.current

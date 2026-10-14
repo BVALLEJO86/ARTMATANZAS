@@ -1836,3 +1836,10 @@
 @media (max-width: 900px) {
   .rl-page .rl-ag-title { font-size: clamp(1.9rem, 9.4vw, 4.2rem); }
 }
+
+/* Celular: la ficha activa al hacer scroll se pinta como con el cursor */
+.rl-page .rl-place.is-active::before { clip-path: inset(0 0 0 0); }
+.rl-page .rl-place.is-active .rl-tile { background: var(--black); color: var(--type); }
+.rl-page .rl-place.is-active .rl-desc,
+.rl-page .rl-place.is-active .rl-facts dt,
+.rl-page .rl-place.is-active .rl-category span { color: var(--black); }
