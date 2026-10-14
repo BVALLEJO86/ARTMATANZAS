@@ -2375,3 +2375,7 @@ body {
 }
 .p-notes li.is-active p { color: var(--black); }
 .p-notes li.is-active sup { flex: none; font-size: 0.66rem; }
+
+/* Correo de contacto siempre en una línea */
+.p-press-mail-text { white-space: nowrap; overflow-wrap: normal; font-size: clamp(1.1rem, 3.3vw, 3.8rem); }
+@media (max-width: 900px) { .p-press-mail-text { font-size: 5.6vw; } }
