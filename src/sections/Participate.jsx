@@ -1,45 +1,56 @@
-const ROLES = ['CREADORES', 'ALIADOS', 'COLABORADORES', 'OPERADORES DEL TERRITORIO']
 
-const LINKS = [
-  { href: '#temporada', label: 'ASISTIR A UN ENCUENTRO' },
-  { href: '#territorio', label: 'CREADORES DEL TERRITORIO' },
-  { href: '#prensa', label: 'ALIANZAS Y COLABORACIONES' }
+const MAIL = 'contacto@artmatanzas.cl'
+
+// Tres puertas de entrada: un verbo grande, a quién le habla y adónde lleva.
+const DOORS = [
+  {
+    verb: 'VEN.',
+    who: 'Público',
+    action: '15 OCT · 20:00 HRS · Hotel Mar Blanco',
+    href: '#sede',
+    color: 'var(--cyan)'
+  },
+  {
+    verb: 'CREA.',
+    who: 'Artistas y creadores',
+    action: 'Postula a la temporada',
+    href: `mailto:${MAIL}?subject=${encodeURIComponent('Quiero participar como creador/a')}`,
+    color: 'var(--yellow)'
+  },
+  {
+    verb: 'SÚMATE.',
+    who: 'Comercio, aliados y territorio',
+    action: 'Alianzas y colaboraciones',
+    href: `mailto:${MAIL}?subject=${encodeURIComponent('Alianza con ART MATANZAS')}`,
+    color: 'var(--red)'
+  }
 ]
 
 export default function Participate() {
   return (
     <section id="participar" className="p-section p-participate">
-      <p className="p-label" data-fade>Participar</p>
-      <h2 className="p-display p-participate-title" data-split>PARTICIPAR ES SER PARTE.</h2>
-
-      <div className="p-grid p-participate-grid">
-        <div className="p-participate-aside">
-          <p className="p-copy" data-fade>
-            Artistas, habitantes, creadores y visitantes. La temporada inaugural está abierta a
-            encontrarnos.
-          </p>
-          <ol className="p-roles" aria-label="Posibles vínculos" data-stagger>
-            {ROLES.map((role, index) => (
-              <li key={role} data-stagger-item>
-                <span>{String(index + 1).padStart(2, '0')}</span>
-                {role}
-              </li>
-            ))}
-          </ol>
-        </div>
-
-        <div className="p-participate-main">
-          <nav className="p-rows" aria-label="Participar en la temporada">
-            {LINKS.map((link, index) => (
-              <a key={link.href} href={link.href} className="p-row" data-fade>
-                <span className="p-row-index">{String(index + 1).padStart(2, '0')}</span>
-                <span className="p-row-label">{link.label}</span>
-                <span className="p-row-arrow" aria-hidden="true">→</span>
-              </a>
-            ))}
-          </nav>
-        </div>
+      <div className="p-participate-head">
+        <h2 className="p-display p-participate-title" data-split>
+          PARTICIPAR ES SER PARTE.
+        </h2>
+        <p className="p-copy p-participate-lede" data-fade>
+          La temporada inaugural está abierta. Elige cómo entrar.
+        </p>
       </div>
+
+      <nav className="p-doors" aria-label="Formas de participar">
+        {DOORS.map((door) => (
+          <a key={door.verb} href={door.href} className="p-door" style={{ '--tone': door.color }} data-fade>
+            <span className="p-door-fill" aria-hidden="true" />
+            <span className="p-door-verb">{door.verb}</span>
+            <span className="p-door-meta">
+              <span className="p-label">{door.who}</span>
+              <strong>{door.action}</strong>
+            </span>
+            <span className="p-door-arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </nav>
     </section>
   )
 }

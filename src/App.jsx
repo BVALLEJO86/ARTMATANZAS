@@ -6,6 +6,7 @@ import RutaLocal, { RUTA_LOCAL_LINKS } from './pages/RutaLocal'
 import { usePath } from './lib/router'
 import { useCustomCursor, usePageEffects } from './hooks/useEditorialEffects'
 import { useSmoothScroll } from './hooks/useSmoothScroll'
+import MailToast from './components/MailToast'
 
 const isRutaLocal = (path) => path.replace(/\/+$/, '') === '/ruta-local'
 
@@ -38,6 +39,8 @@ export default function App() {
       {showIntro && <Intro />}
 
       <div id="custom-cursor" className="custom-cursor" aria-hidden="true" />
+      <div className="p-curtain" aria-hidden="true" />
+      <MailToast />
       {onRutaLocal ? <Header brandHref="/" links={RUTA_LOCAL_LINKS} /> : <Header />}
 
       {onRutaLocal ? <RutaLocal /> : <Home />}

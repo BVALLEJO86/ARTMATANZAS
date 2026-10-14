@@ -61,7 +61,7 @@ export default function Intro() {
       const tl = gsap.timeline({ onComplete: () => setIsDone(true) })
 
       // idle · el logo se lee como unidad.
-      tl.addLabel('idle').addLabel('detach', 'idle+=0.7')
+      tl.addLabel('idle').addLabel('detach', 'idle+=0.45')
 
       // detach · se desprende hacia arriba y cae bajo su posición.
       tl.to(disc, { scaleX: 0.97, scaleY: 1.03, duration: 0.25, ease: 'power2.out' }, 'detach')
@@ -99,11 +99,21 @@ export default function Intro() {
         .set(body, { x: 0, y: 0 })
 
       // exit · pausa mínima y corte seco: la intro desaparece y el título se asienta.
-      tl.addLabel('exit', 'return+=0.9')
+      tl.addLabel('exit', 'return+=0.55')
         .set(root, { visibility: 'hidden' }, 'exit')
         .call(releaseScroll, null, 'exit')
         // Avisa al hero para que arranque su entrada justo tras el corte.
         .call(signalDone, null, 'exit')
+
+      // Misma coreografía, más ágil: ~2,4 s la primera vez y ~1,5 s en visitas siguientes.
+      let seen = false
+      try {
+        seen = window.sessionStorage.getItem('am-intro') === '1'
+        window.sessionStorage.setItem('am-intro', '1')
+      } catch {
+        // Sin almacenamiento: se usa la versión de primera visita.
+      }
+      tl.timeScale(seen ? 2.8 : 1.75)
     }, root)
 
     return () => {

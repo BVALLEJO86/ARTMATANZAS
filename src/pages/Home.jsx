@@ -1,6 +1,5 @@
 import Hero from '../sections/Hero'
 import Presentation from '../sections/Presentation'
-import Manifesto from '../sections/Manifesto'
 import Season from '../sections/Season'
 import Territory from '../sections/Territory'
 import RouteTeaser from '../sections/RouteTeaser'
@@ -10,6 +9,7 @@ import Host from '../sections/Host'
 import Closing from '../sections/Closing'
 import Press from '../sections/Press'
 import Marquee from '../components/Marquee'
+import Allies from '../components/Allies'
 import { usePremiumMotion } from '../hooks/usePremiumMotion'
 
 const SEASON_TICKER = [
@@ -32,7 +32,6 @@ export default function Home() {
       <Hero />
       <Marquee items={SEASON_TICKER} />
       <Presentation />
-      <Manifesto />
       <Season />
       <Territory />
       <RouteTeaser />
@@ -41,6 +40,7 @@ export default function Home() {
       <Marquee items={TERRITORY_TICKER} tone="light" />
       <Host />
       <Closing />
+      <Allies />
       <Press />
     </main>
   )

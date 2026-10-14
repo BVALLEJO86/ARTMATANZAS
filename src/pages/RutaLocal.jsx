@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import { CONATUR_URL, LOCALITIES, PLACES } from '../data/rutaLocal'
 
 export const RUTA_LOCAL_LINKS = [
-  { href: '#mapa', label: 'MAPA' },
   { href: '#mi-ruta', label: 'MI RUTA' },
-  { href: '#beneficios', label: 'BENEFICIOS' },
   { href: '#agenda', label: 'AGENDA' },
   { href: '#red-local', label: 'RED LOCAL' }
 ]
@@ -14,7 +12,7 @@ const STORAGE_KEY = 'am-ruta-local'
 const AGENDA = [
   { date: '15 OCT 2026', label: 'MIRAR', name: 'RAÚL SALVESTRINI' },
   { date: '12 NOV 2026', label: 'HABITAR', name: 'LEONARDO PORTUS' },
-  { date: '10 DIC 2026', label: 'DEJAR HUELLA', name: 'JORGE CAMPOS / PIXELART' }
+  { date: '10 DIC 2026', label: 'DEJAR HUELLA', name: 'FAB CIRAOLO' }
 ]
 
 // "Mi ruta" vive en el navegador de cada visitante; si el almacenamiento falla, funciona en memoria.
@@ -65,7 +63,7 @@ export default function RutaLocal() {
               Descubre lugares, arma tu propia ruta y conecta directamente con quienes sostienen la vida local.
             </p>
             <div className="ruta-actions">
-              <a href="#mapa" className="solid-cta">EXPLORAR EL MAPA</a>
+              <a href="#red-local" className="solid-cta">EXPLORAR LA RED</a>
               <a href="#mi-ruta" className="text-cta">VER MI RUTA ({ids.length})</a>
             </div>
           </div>
@@ -127,26 +125,6 @@ export default function RutaLocal() {
         </ol>
       </section>
 
-      <section id="mapa" className="section-shell ruta-map">
-        <div className="section-heading">
-          <p className="eyebrow">Mapa</p>
-          <h2 className="display-title">MAPA</h2>
-        </div>
-
-        <ol className="route-line" aria-label="Localidades de la ruta">
-          {LOCALITIES.map((locality) => {
-            const count = PLACES.filter((place) => place.locality === locality).length
-            return (
-              <li key={locality}>
-                <span className="route-stop" aria-hidden="true" />
-                <strong>{locality}</strong>
-                <span>{String(count).padStart(2, '0')}</span>
-              </li>
-            )
-          })}
-        </ol>
-        <Pending>Mapa interactivo en preparación.</Pending>
-      </section>
 
       <section id="mi-ruta" className="section-shell ruta-mine">
         <div className="section-heading">
@@ -171,13 +149,6 @@ export default function RutaLocal() {
         )}
       </section>
 
-      <section id="beneficios" className="section-shell ruta-benefits">
-        <div className="section-heading">
-          <p className="eyebrow">Beneficios</p>
-          <h2 className="display-title">BENEFICIOS</h2>
-        </div>
-        <Pending>Contenido en preparación.</Pending>
-      </section>
 
       <section id="agenda" className="section-shell ruta-agenda">
         <div className="section-heading">

@@ -12,31 +12,30 @@ export default function Season() {
 
       <ol className="p-encounters">
         {ENCOUNTERS.map((item) => (
-          <li
-            key={item.index}
-            className="p-encounter"
-            style={{ '--tone': item.color }}
-            data-encounter
-            data-cursor={item.image ? 'VER' : undefined}
-          >
+          <li key={item.index} className="p-encounter" style={{ '--tone': item.color }} data-encounter>
             <span className="p-encounter-fill" aria-hidden="true" />
             <div className="p-encounter-meta">
               <span className="p-encounter-index">{item.index}</span>
-              <span className="p-label">{item.dateLabel}</span>
+              <span className="p-label">
+                {item.dateLabel}
+                {item.time ? ` · ${item.time} HRS` : ''}
+              </span>
             </div>
             <div className="p-encounter-main">
               <span className="p-encounter-label">{item.label}</span>
               <h3 className="p-encounter-name">{item.name}</h3>
+              <a
+                className="p-ig"
+                href={`https://www.instagram.com/${item.instagram}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                @{item.instagram} <span aria-hidden="true">↗</span>
+              </a>
             </div>
-            <div className="p-encounter-media" data-reveal-media>
-              {item.image ? (
-                <img src={item.image} alt={item.imageAlt} loading="lazy" data-media-img />
-              ) : (
-                <div className="p-encounter-placeholder" role="img" aria-label="Imagen del encuentro 03 en actualización">
-                  <span>{item.index}</span>
-                  <small>IMAGEN / PROGRAMACIÓN EN ACTUALIZACIÓN</small>
-                </div>
-              )}
+            <div className="p-encounter-media" data-reveal-media data-cursor={item.label}>
+              <img src={item.image} alt={item.imageAlt} loading="lazy" data-media-img />
+              <span className="p-encounter-bar" aria-hidden="true" data-bar />
             </div>
           </li>
         ))}

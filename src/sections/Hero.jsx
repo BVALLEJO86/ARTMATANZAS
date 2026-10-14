@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ENCOUNTERS, VENUE } from '../data/season'
+import coastPhoto from '../Assets/Fotos/portada-costa.webp'
 
 function nextEncounter(now = new Date()) {
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
@@ -30,6 +31,9 @@ export default function Hero() {
       </div>
 
       <div className="p-hero-field" aria-hidden="true">
+        <div className="p-hero-photo" data-hero-photo>
+          <img src={coastPhoto} alt="" fetchpriority="high" data-hero-photo-img />
+        </div>
         <span className="p-hero-sun" data-hero-sun />
         <span className="p-hero-horizon" data-hero-horizon />
       </div>
@@ -41,14 +45,16 @@ export default function Hero() {
 
       <div className="p-hero-bottom">
         {next ? (
-          <a href="#temporada" className="p-next" data-hero-fade data-cursor="VER">
+          <a href="#sede" className="p-next" data-hero-fade data-cursor="IR">
             <span className="p-next-dot" style={{ background: next.color }} />
             <span className="p-next-text">
               <span className="p-label">Próximo encuentro</span>
               <strong>
                 {next.dateLabel.replace(' 2026', '')} — {next.label}
               </strong>
-              <span className="p-label">{VENUE}</span>
+              <span className="p-label">
+                {next.time ? `${next.time} HRS · ` : ''}{VENUE.name}
+              </span>
             </span>
             <span className="p-next-count">
               {days === 0 ? 'HOY' : (

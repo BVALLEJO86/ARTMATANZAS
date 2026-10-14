@@ -35,6 +35,7 @@ export function useSmoothScroll() {
       const target = document.querySelector(id)
       if (!target) return
       event.preventDefault()
+      lenis.start() // por si el menú móvil lo tenía detenido
       lenis.scrollTo(target, { offset: -80 })
       window.history.replaceState(null, '', id)
     }

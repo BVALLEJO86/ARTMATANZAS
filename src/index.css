@@ -189,7 +189,6 @@ html {
   justify-content: flex-start;
   padding: 0 34px;
   background: rgba(250, 250, 250, 0.96);
-  backdrop-filter: blur(2px);
 }
 
 .site-header::after {

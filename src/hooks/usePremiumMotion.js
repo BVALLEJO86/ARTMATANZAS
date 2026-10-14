@@ -32,6 +32,10 @@ export function usePremiumMotion() {
         const sun = document.querySelector('[data-hero-sun]')
         const horizon = document.querySelector('[data-hero-horizon]')
 
+        const photo = document.querySelector('[data-hero-photo]')
+        const photoImg = document.querySelector('[data-hero-photo-img]')
+        gsap.set(photo, { clipPath: 'inset(100% 0% 0% 0%)' })
+        gsap.set(photoImg, { scale: 1.18 })
         gsap.set(heroLines, { yPercent: 115 })
         gsap.set(heroFades, { autoAlpha: 0, y: 14 })
         gsap.set(sun, { scale: 0, transformOrigin: '50% 100%' })
@@ -40,6 +44,8 @@ export function usePremiumMotion() {
         const playHero = () => {
           const tl = gsap.timeline({ defaults: { ease: EASE } })
           tl.to(horizon, { scaleX: 1, duration: 1.4, ease: 'expo.inOut' })
+            .to(photo, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'expo.inOut' }, 0.15)
+            .to(photoImg, { scale: 1.05, duration: 2.4, ease: 'expo.out' }, 0.15)
             .to(heroLines, { yPercent: 0, duration: 1.3, stagger: 0.12 }, 0.35)
             .to(sun, { scale: 1, duration: 1.6, ease: 'expo.out' }, 0.6)
             .to(heroFades, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.06 }, 0.9)
@@ -56,6 +62,11 @@ export function usePremiumMotion() {
         // El "sol" se hunde en el horizonte al hacer scroll.
         gsap.to(sun, {
           yPercent: 60,
+          ease: 'none',
+          scrollTrigger: { trigger: '[data-hero]', start: 'top top', end: 'bottom top', scrub: true }
+        })
+        gsap.to(photoImg, {
+          yPercent: 12,
           ease: 'none',
           scrollTrigger: { trigger: '[data-hero]', start: 'top top', end: 'bottom top', scrub: true }
         })
@@ -142,6 +153,8 @@ export function usePremiumMotion() {
             { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut' },
             0.1
           )
+          const bar = row.querySelector('[data-bar]')
+          if (bar) tl.from(bar, { scaleY: 0, duration: 1.2, ease: 'expo.inOut' }, 0.7)
           if (img) {
             tl.from(img, { scale: 1.35, duration: 1.8, ease: EASE }, 0.1)
             gsap.fromTo(
@@ -156,19 +169,89 @@ export function usePremiumMotion() {
           }
         })
 
+        /* ---------- IMÁGENES SUELTAS (sede) ---------- */
+        q('[data-reveal-media]').forEach((media) => {
+          if (media.closest('[data-encounter]')) return
+          const img = media.querySelector('[data-media-img]')
+          const tl = gsap.timeline({ scrollTrigger: { trigger: media, start: 'top 85%', once: true } })
+          tl.fromTo(
+            media,
+            { clipPath: 'inset(0% 0% 100% 0%)' },
+            { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.inOut' }
+          )
+          if (img) tl.from(img, { scale: 1.3, duration: 1.8, ease: EASE }, 0)
+        })
+
+        /* ---------- GALERÍA HORIZONTAL ---------- */
+        const gallery = document.querySelector('[data-gallery]')
+        const track = document.querySelector('[data-gallery-track]')
+        if (gallery && track && desktop) {
+          const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
+          gsap.to(track, {
+            x: () => -distance(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: gallery,
+              start: 'center center',
+              end: () => `+=${distance()}`,
+              pin: true,
+              scrub: 0.8,
+              invalidateOnRefresh: true
+            }
+          })
+          gsap.utils.toArray('.p-gallery-item img', track).forEach((img) => {
+            gsap.fromTo(img, { xPercent: -8 }, {
+              xPercent: 8,
+              ease: 'none',
+              scrollTrigger: { trigger: gallery, start: 'center center', end: () => `+=${distance()}`, scrub: true, invalidateOnRefresh: true }
+            })
+          })
+        }
+
         /* ---------- TERRITORIO: filas que se cruzan ---------- */
+        // Las dos filas se cruzan de lado a lado, pero el recorrido se calcula con el espacio
+        // libre real: ninguna letra sale del borde (ni la L de POSTAL).
+        const title = document.querySelector('.p-territory-title')
         q('[data-drift]').forEach((row) => {
           const dir = Number(row.dataset.drift)
-          gsap.fromTo(
-            row,
-            { xPercent: 0 },
-            {
-              xPercent: dir * -5,
-              ease: 'none',
-              scrollTrigger: { trigger: '[data-territory]', start: 'top bottom', end: 'bottom top', scrub: true }
-            }
-          )
+          const room = () => {
+            const cs = getComputedStyle(title)
+            const inner = title.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
+            return Math.max(0, inner - row.offsetWidth)
+          }
+          const offset = () => (dir === -1 ? room() : -room())
+          // Ida y vuelta: entran cruzadas, se ordenan al centro y vuelven a cruzarse al salir.
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: '[data-territory]',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.8,
+                invalidateOnRefresh: true
+              }
+            })
+            .fromTo(row, { x: offset }, { x: 0, ease: 'power1.inOut', duration: 1, immediateRender: true })
+            .to(row, { x: 0, duration: 0.35 })
+            .to(row, { x: offset, ease: 'power1.inOut', duration: 1 })
         })
+
+        // Inclinación según la velocidad del scroll: el texto "se arrastra" al bajar rápido.
+        const rows = q('.p-territory-row')
+        if (rows.length) {
+          const skewTo = rows.map((row) => gsap.quickTo(row, 'skewX', { duration: 0.5, ease: 'power3.out' }))
+          ScrollTrigger.create({
+            trigger: '[data-territory]',
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const skew = gsap.utils.clamp(-10, 10, self.getVelocity() / -250)
+              skewTo.forEach((fn, index) => fn(index % 2 ? -skew : skew))
+            },
+            onLeave: () => skewTo.forEach((fn) => fn(0)),
+            onLeaveBack: () => skewTo.forEach((fn) => fn(0))
+          })
+        }
 
         /* ---------- IMPACTO: líneas que llegan desde los lados ---------- */
         q('[data-slide]').forEach((line) => {
