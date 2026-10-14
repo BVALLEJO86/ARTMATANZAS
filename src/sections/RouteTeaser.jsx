@@ -7,7 +7,6 @@ export default function RouteTeaser() {
   return (
     <section id="ruta-local" className="p-route">
       <div className="p-section p-grid">
-        <p className="p-label p-col-label" data-fade>Ruta Local ART MATANZAS</p>
         <h2 className="p-display p-route-title" data-split>
           DE LA PROGRAMACIÓN AL TERRITORIO.
         </h2>
@@ -22,8 +21,8 @@ export default function RouteTeaser() {
           </Link>
         </div>
 
-        <div className="p-badge" aria-hidden="true">
-          <svg viewBox="0 0 200 200" data-badge>
+        <Link to="/ruta-local" className="p-badge" aria-label="Ir a Ruta Local" data-cursor="ENTRAR">
+          <svg viewBox="0 0 200 200" data-badge aria-hidden="true">
             <defs>
               <path id="badge-circle" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
             </defs>
@@ -31,8 +30,10 @@ export default function RouteTeaser() {
               <textPath href="#badge-circle">{BADGE + BADGE}</textPath>
             </text>
           </svg>
-          <span className="p-badge-core" />
-        </div>
+          <span className="p-badge-core" aria-hidden="true">
+            <Arrow dir="up-right" />
+          </span>
+        </Link>
       </div>
     </section>
   )

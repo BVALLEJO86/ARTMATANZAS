@@ -324,7 +324,39 @@ export function usePremiumMotion() {
         })
 
         /* ---------- BADGE RUTA LOCAL ---------- */
-        gsap.to('[data-badge]', { rotate: 360, duration: 18, ease: 'none', repeat: -1, transformOrigin: '50% 50%' })
+        // Gira solo; al pasar el cursor (o tocarlo) acelera, y el scroll le da un empujón.
+        const badgeSpin = gsap.to('[data-badge]', { rotate: 360, duration: 18, ease: 'none', repeat: -1, transformOrigin: '50% 50%' })
+        const badgeLink = document.querySelector('.p-badge')
+        if (badgeLink) {
+          const fast = () => gsap.to(badgeSpin, { timeScale: 6, duration: 0.6, ease: 'power2.out' })
+          const slow = () => gsap.to(badgeSpin, { timeScale: 1, duration: 1.2, ease: 'power2.out' })
+          badgeLink.addEventListener('pointerenter', fast)
+          badgeLink.addEventListener('pointerleave', slow)
+          badgeLink.addEventListener('touchstart', fast, { passive: true })
+          badgeLink.addEventListener('touchend', slow)
+          cleanups.push(() => {
+            badgeLink.removeEventListener('pointerenter', fast)
+            badgeLink.removeEventListener('pointerleave', slow)
+            badgeLink.removeEventListener('touchstart', fast)
+            badgeLink.removeEventListener('touchend', slow)
+          })
+          ScrollTrigger.create({
+            trigger: '.p-route',
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const boost = Math.min(Math.abs(self.getVelocity()) / 400, 5)
+              if (boost > 0.4 && !badgeLink.matches(':hover')) {
+                gsap.to(badgeSpin, {
+                  timeScale: self.direction * (1 + boost),
+                  duration: 0.3,
+                  overwrite: true,
+                  onComplete: slow
+                })
+              }
+            }
+          })
+        }
 
         /* ---------- BOTONES MAGNÉTICOS ---------- */
         if (fine) {
