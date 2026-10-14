@@ -633,10 +633,8 @@ export default function RutaLocal() {
       {/* ---------- PORTADA ---------- */}
       <section className="rl-hero" aria-labelledby="rl-statement">
         <div className="rl-wrap">
-          <div className="rl-hero-top" data-rl-fade>
-            <p className="rl-label">(Ruta Local)</p>
-            <p className="rl-label rl-hero-mid">Temporada 2026</p>
-            <p className="rl-label rl-muted rl-hero-end">Navidad — Chile</p>
+          <div className="rl-hero-top rl-hero-top-solo" data-rl-fade>
+            <p className="rl-label">Temporada 2026</p>
           </div>
 
           {/* Titular: contraste de pesos (negro / fino) y el sol de la marca como signo */}

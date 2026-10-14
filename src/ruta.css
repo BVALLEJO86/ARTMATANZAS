@@ -1843,3 +1843,6 @@
 .rl-page .rl-place.is-active .rl-desc,
 .rl-page .rl-place.is-active .rl-facts dt,
 .rl-page .rl-place.is-active .rl-category span { color: var(--black); }
+
+/* Portada: solo "Temporada 2026", centrado en todas las pantallas */
+.rl-page .rl-hero-top.rl-hero-top-solo { display: flex; flex-direction: row; justify-content: center; align-items: center; text-align: center; }
