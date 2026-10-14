@@ -2719,3 +2719,13 @@ body {
 
 /* Máscara de líneas: aire para tildes en mayúscula (PROGRAMACIÓN) */
 .p-split-line-mask { padding-top: 0.16em; margin-top: -0.16em; }
+
+/* Portada en pantallas anchas: el sol nunca sobrepasa la foto */
+.p-hero-sun {
+  width: auto;
+  height: min(calc(var(--size) / 2), 88%);
+  aspect-ratio: 2 / 1;
+}
+@media (min-width: 901px) {
+  .p-hero-field { min-height: clamp(220px, 30vh, 420px); }
+}
