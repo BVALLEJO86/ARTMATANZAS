@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 import { Link } from '../lib/router'
 
 const BADGE = 'RUTA LOCAL · ART MATANZAS · '
@@ -17,7 +18,7 @@ export default function RouteTeaser() {
           </p>
           <Link to="/ruta-local" className="p-button" data-magnetic data-fade>
             <span className="p-button-text">EXPLORAR RUTA LOCAL</span>
-            <span className="p-button-arrow" aria-hidden="true">→</span>
+            <span className="p-button-arrow" aria-hidden="true"><Arrow dir="right" /></span>
           </Link>
         </div>
 

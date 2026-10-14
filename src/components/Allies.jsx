@@ -1,3 +1,4 @@
+import Arrow from './Arrow'
 import { ALLIES } from '../data/season'
 
 const LOGOS = import.meta.glob('../Assets/Aliados/*.webp', { eager: true, import: 'default' })
@@ -20,7 +21,7 @@ export default function Allies() {
               <span className="p-ally-logo">
                 <img src={logo(ally.logo)} alt={ally.name} />
               </span>
-              <span className="p-label">@{ally.instagram} ↗</span>
+              <span className="p-label">@{ally.instagram} <Arrow /></span>
             </a>
           </li>
         ))}

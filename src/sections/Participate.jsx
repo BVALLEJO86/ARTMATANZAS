@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 
 const MAIL = 'contacto@artmatanzas.cl'
 
@@ -47,7 +48,7 @@ export default function Participate() {
               <span className="p-label">{door.who}</span>
               <strong>{door.action}</strong>
             </span>
-            <span className="p-door-arrow" aria-hidden="true">↗</span>
+            <span className="p-door-arrow" aria-hidden="true"><Arrow /></span>
           </a>
         ))}
       </nav>

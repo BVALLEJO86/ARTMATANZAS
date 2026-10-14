@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 import hotelPhoto from '../Assets/Fotos/hotel-mar-blanco.webp'
 import { ENCOUNTERS, VENUE, calendarLink } from '../data/season'
 
@@ -52,7 +53,7 @@ export default function Host() {
           <div className="p-visit-actions" data-fade>
             <a href={VENUE.maps} className="p-button" data-magnetic target="_blank" rel="noopener noreferrer">
               <span className="p-button-text">CÓMO LLEGAR</span>
-              <span className="p-button-arrow" aria-hidden="true">↗</span>
+              <span className="p-button-arrow" aria-hidden="true"><Arrow /></span>
             </a>
             {calendar && (
               <a href={calendar} className="p-textlink" target="_blank" rel="noopener noreferrer">

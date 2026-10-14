@@ -1,3 +1,4 @@
+import Arrow from './components/Arrow'
 import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Intro from './components/Intro'
@@ -48,7 +49,7 @@ export default function App() {
       <footer className="site-footer">
         <div>ART MATANZAS · TEMPORADA 2026</div>
         <div>MATANZAS · CHILE</div>
-        <a href="#inicio" className="site-footer-top">VOLVER ARRIBA ↑</a>
+        <a href="#inicio" className="site-footer-top">VOLVER ARRIBA <Arrow dir="up" /></a>
       </footer>
     </div>
   )

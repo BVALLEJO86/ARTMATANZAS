@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 import { ENCOUNTERS } from '../data/season'
 
 export default function Season() {
@@ -30,7 +31,7 @@ export default function Season() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                @{item.instagram} <span aria-hidden="true">↗</span>
+                @{item.instagram} <Arrow />
               </a>
             </div>
             <div className="p-encounter-media" data-reveal-media data-cursor={item.label}>

@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 import wordmark from '../Assets/Logos/art-matanzas-wordmark-crop.png'
 
 export default function Press() {
@@ -10,7 +11,7 @@ export default function Press() {
         </div>
         <a href="mailto:contacto@artmatanzas.cl" className="p-press-mail" data-cursor="ESCRIBIR" data-fade>
           <span className="p-press-mail-text">contacto@artmatanzas.cl</span>
-          <span className="p-press-mail-arrow" aria-hidden="true">↗</span>
+          <span className="p-press-mail-arrow" aria-hidden="true"><Arrow /></span>
         </a>
       </div>
       <div className="p-press-mark" aria-hidden="true">

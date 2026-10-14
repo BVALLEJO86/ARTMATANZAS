@@ -1,3 +1,4 @@
+import Arrow from '../components/Arrow'
 import { useEffect, useState } from 'react'
 import { CONATUR_URL, LOCALITIES, PLACES } from '../data/rutaLocal'
 
@@ -110,7 +111,7 @@ export default function RutaLocal() {
                       {isAdded ? '✓ EN MI RUTA' : '+ AGREGAR A MI RUTA'}
                     </button>
                     {/* Perfiles de comercio pendientes: no existe aún la página de destino. */}
-                    <span className="text-cta is-pending" aria-disabled="true">VER PERFIL →</span>
+                    <span className="text-cta is-pending" aria-disabled="true">VER PERFIL <Arrow dir="right" /></span>
                   </div>
                 </div>
 
@@ -178,7 +179,7 @@ export default function RutaLocal() {
             Un aliado para conectar Matanzas, La Boca, Pupuya y Puertecillo desde la colaboración local.
           </p>
           <a href={CONATUR_URL} className="text-cta conatur-cta" target="_blank" rel="noopener noreferrer">
-            CONOCER A CONATUR →
+            CONOCER A CONATUR <Arrow dir="right" />
           </a>
         </div>
       </section>

@@ -53,13 +53,21 @@ export default function Header({ links = HOME_LINKS, brandHref = '#inicio' }) {
       <nav id="menu-principal" className={`main-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Navegación principal">
         {links.map((link, index) => (
           <a key={link.href} href={link.href} onClick={(event) => goTo(event, link.href)} style={{ '--i': index }}>
-            <span className="main-nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <span className="main-nav-label">{link.label}</span>
+            <span className="main-nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
           </a>
         ))}
-        <p className="main-nav-foot" aria-hidden={!isMenuOpen}>
-          15 OCT · 20:00 HRS · HOTEL MAR BLANCO
-        </p>
+        <div className="main-nav-foot" aria-hidden={!isMenuOpen}>
+          <p>
+            <span className="main-nav-dot" />
+            15 OCT · 20:00 HRS
+            <br />
+            Hotel Mar Blanco, Matanzas
+          </p>
+          <p>
+            <a href="mailto:contacto@artmatanzas.cl">contacto@artmatanzas.cl</a>
+          </p>
+        </div>
       </nav>
 
       <button
