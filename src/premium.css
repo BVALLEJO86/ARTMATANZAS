@@ -250,10 +250,6 @@ body {
   text-align: center;
 }
 
-.p-hero-coords {
-  text-align: right;
-}
-
 .p-hero-field {
   position: relative;
   flex: 1;
@@ -1220,7 +1216,7 @@ body {
   .brand-logo { width: 150px; min-width: 150px; }
 
   .p-hero { min-height: calc(100svh - 68px); padding-top: 20px; }
-  .p-hero-top { grid-template-columns: 1fr 1fr; }
+  .p-hero-top { grid-template-columns: 1fr; }
   .p-hero-lede { display: none; }
   .p-hero-title { white-space: normal; font-size: clamp(2.2rem, 11.4vw, 7rem); line-height: 0.88; }
   .p-hero-sun { --size: 70vw; }
@@ -1266,7 +1262,6 @@ body {
 }
 
 @media (max-width: 560px) {
-  .p-hero-top .p-hero-coords { font-size: 0.6rem; }
   .p-next { gap: 12px; padding: 10px 14px 10px 10px; }
   .p-next-dot { width: 28px; height: 28px; }
   .p-next-count b { font-size: 1.7rem; }
