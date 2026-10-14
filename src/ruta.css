@@ -1324,3 +1324,104 @@
 .rl-page .rl-start-all .p-arrow { transition: translate 0.5s var(--ease-out); }
 .rl-page .rl-start-all:hover .p-arrow { translate: 0 3px; }
 .rl-page .rl-start-all:focus-visible { outline: 2px solid var(--black); outline-offset: 4px; }
+
+/* =========================================================
+   Conatur: bloque celeste editorial
+   ========================================================= */
+.rl-page .rl-ally {
+  position: relative;
+  margin-top: clamp(6rem, 11vw, 11rem);
+  padding: clamp(2.4rem, 4vw, 3.6rem) 0 clamp(3rem, 6vw, 5.4rem);
+  background: var(--cyan);
+  overflow: hidden;
+}
+
+.rl-page .rl-ally-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--black);
+}
+
+.rl-page .rl-ally-sub { color: rgba(17, 17, 17, 0.6); }
+
+.rl-page .rl-ally-title {
+  margin: clamp(2.4rem, 5vw, 4.4rem) 0 0;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(3rem, 12.4vw, 17rem);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--black);
+}
+
+.rl-page .rl-ally-line {
+  display: flex;
+  align-items: center;
+  gap: 0.12em;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.rl-page .rl-ally-line-2 { justify-content: flex-end; }
+
+.rl-page .rl-ally-seal {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 0.78em;
+  height: 0.78em;
+  margin-right: 0.08em;
+  border-radius: 50%;
+  background: var(--bg);
+  box-shadow: 0 0 0 0.03em var(--black);
+}
+
+.rl-page .rl-ally-seal img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.rl-page .rl-ally-foot {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 20px;
+  align-items: end;
+  margin-top: clamp(2.4rem, 5vw, 4.4rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--black);
+}
+
+.rl-page .rl-ally-lede {
+  grid-column: 1 / span 6;
+  max-width: 30rem;
+  margin: 0;
+  font-size: clamp(1.05rem, 1.4vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--black);
+}
+
+.rl-page .rl-ally-foot .rl-ally-button { grid-column: 9 / -1; justify-self: end; }
+
+/* Botón sobre celeste: negro, al pasar se vuelve blanco */
+.rl-page .rl-ally-button:hover { background: var(--bg); color: var(--black); }
+.rl-page .rl-ally-button:hover .rl-button-icon { background: var(--black); color: var(--yellow); }
+
+@media (max-width: 900px) {
+  .rl-page .rl-ally-top { flex-direction: column; gap: 0.35rem; }
+  .rl-page .rl-ally-title { font-size: clamp(2.6rem, 14.6vw, 6rem); line-height: 0.9; }
+  .rl-page .rl-ally-line-2 { justify-content: flex-start; }
+  .rl-page .rl-ally-foot { grid-template-columns: 1fr; gap: 1.6rem; }
+  .rl-page .rl-ally-lede,
+  .rl-page .rl-ally-foot .rl-ally-button { grid-column: 1; justify-self: stretch; }
+  .rl-page .rl-ally-button { justify-content: space-between; }
+}
+@media (max-width: 900px) {
+  .rl-page .rl-ally-title { font-size: clamp(2.3rem, 12.2vw, 5rem); }
+  .rl-page .rl-ally-seal { width: 0.72em; height: 0.72em; }
+}

@@ -329,6 +329,26 @@ export default function RutaLocal() {
           scrollTrigger: { trigger: '.rl-agenda-list', start: 'top 80%', once: true }
         })
 
+        // Conatur: las dos líneas llegan desde lados opuestos y el sello aparece girando.
+        gsap.utils.toArray('[data-rl-ally-line]').forEach((line) => {
+          gsap.fromTo(
+            line,
+            { xPercent: Number(line.dataset.rlAllyLine) * (conditions.desktop ? 22 : 12) },
+            {
+              xPercent: 0,
+              ease: 'none',
+              scrollTrigger: { trigger: '[data-rl-ally]', start: 'top bottom', end: 'top 25%', scrub: 0.8 }
+            }
+          )
+        })
+        gsap.from('[data-rl-ally-seal]', {
+          scale: 0,
+          rotate: -120,
+          duration: 1.4,
+          ease: 'back.out(1.5)',
+          scrollTrigger: { trigger: '[data-rl-ally]', start: 'top 60%', once: true }
+        })
+
         // Cierre: el sol amarillo sale del horizonte.
         gsap.fromTo(
           '[data-rl-rise]',
@@ -420,7 +440,7 @@ export default function RutaLocal() {
       const mine = document.getElementById('mi-ruta')?.getBoundingClientRect()
       const past = window.scrollY > window.innerHeight * 0.9
       const atMine = mine && mine.top < window.innerHeight && mine.bottom > 0
-      const end = document.querySelector('.rl-end')?.getBoundingClientRect()
+      const end = document.querySelector('.rl-ally')?.getBoundingClientRect()
       const atEnd = end && end.top < window.innerHeight * 0.8
       setPillOn(past && !atMine && !atEnd)
     }
@@ -811,20 +831,43 @@ export default function RutaLocal() {
       </section>
 
       {/* ---------- CONATUR ---------- */}
-      <section className="rl-section rl-ally" aria-labelledby="conatur-title">
-        <div className="rl-wrap rl-ally-grid" data-rl-reveal>
-          <p className="rl-label">Articulación territorial</p>
-          <img src={conaturLogo} alt="" className="rl-ally-logo" aria-hidden="true" />
-          <h2 id="conatur-title" className="rl-ally-name">
-            Conatur Navidad
-          </h2>
-          <p className="rl-ally-copy">Un aliado para conectar el turismo y el comercio de Navidad desde la colaboración local.</p>
-          <a href={CONATUR_URL} className="rl-button" target="_blank" rel="noopener noreferrer" data-rl-magnetic>
-            <span>Conocer a Conatur</span>
-            <span className="rl-button-icon" aria-hidden="true">
-              <Arrow dir="up-right" />
+      <section className="rl-ally" aria-labelledby="conatur-title" data-rl-ally>
+        <div className="rl-wrap">
+          <div className="rl-ally-top">
+            <p className="rl-label">Aliado territorial</p>
+            <p className="rl-label rl-ally-sub">Corporación de Turismo y Comercio · Navidad</p>
+          </div>
+
+          <h2 id="conatur-title" className="rl-ally-title" aria-label="Conatur Navidad">
+            <span className="rl-ally-line" data-rl-ally-line="-1" aria-hidden="true">
+              Conatur
             </span>
-          </a>
+            <span className="rl-ally-line rl-ally-line-2" data-rl-ally-line="1" aria-hidden="true">
+              <span className="rl-ally-seal" data-rl-ally-seal>
+                <img src={conaturLogo} alt="" />
+              </span>
+              Navidad
+            </span>
+          </h2>
+
+          <div className="rl-ally-foot">
+            <p className="rl-ally-lede" data-rl-reveal>
+              Un aliado para conectar el turismo y el comercio de Navidad desde la colaboración local.
+            </p>
+            <a
+              href={CONATUR_URL}
+              className="rl-button rl-ally-button"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-rl-magnetic
+              data-cursor-color="var(--yellow)"
+            >
+              <span>Conocer a Conatur</span>
+              <span className="rl-button-icon" aria-hidden="true">
+                <Arrow dir="up-right" />
+              </span>
+            </a>
+          </div>
         </div>
       </section>
       {/* ---------- CIERRE ---------- */}
