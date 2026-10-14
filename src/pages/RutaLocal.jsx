@@ -329,13 +329,6 @@ export default function RutaLocal() {
           scrollTrigger: { trigger: '.rl-agenda-list', start: 'top 80%', once: true }
         })
 
-        // Conatur: el sello gira con el scroll.
-        gsap.to('.rl-ally-logo', {
-          rotate: 360,
-          ease: 'none',
-          scrollTrigger: { trigger: '.rl-ally', start: 'top bottom', end: 'bottom top', scrub: 1 }
-        })
-
         // Cierre: el sol amarillo sale del horizonte.
         gsap.fromTo(
           '[data-rl-rise]',
