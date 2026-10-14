@@ -100,6 +100,9 @@ export function useCustomCursor() {
       cursor.textContent = labelled ? labelled.dataset.cursor : ''
       cursor.classList.toggle('has-label', Boolean(labelled))
       cursor.classList.toggle('is-hovering', !labelled && Boolean(event.target.closest?.(INTERACTIVE)))
+      // Color propio cuando el fondo se come al celeste (data-cursor-color en el elemento o un ancestro).
+      const tinted = event.target.closest?.('[data-cursor-color]')
+      cursor.style.background = tinted ? tinted.dataset.cursorColor : ''
     }
 
     const animateCursor = () => {

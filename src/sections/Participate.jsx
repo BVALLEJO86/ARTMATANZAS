@@ -9,21 +9,24 @@ const DOORS = [
     who: 'Público',
     action: '15 OCT · 20:00 HRS · Hotel Mar Blanco',
     href: '#sede',
-    color: 'var(--cyan)'
+    color: 'var(--cyan)',
+    cursor: 'var(--red)'
   },
   {
     verb: 'CREA.',
     who: 'Artistas y creadores',
     action: 'Postula a la temporada',
     href: `mailto:${MAIL}?subject=${encodeURIComponent('Quiero participar como creador/a')}`,
-    color: 'var(--yellow)'
+    color: 'var(--yellow)',
+    cursor: 'var(--red)'
   },
   {
     verb: 'SÚMATE.',
     who: 'Comercio, aliados y territorio',
     action: 'Alianzas y colaboraciones',
     href: `mailto:${MAIL}?subject=${encodeURIComponent('Alianza con ART MATANZAS')}`,
-    color: 'var(--red)'
+    color: 'var(--red)',
+    cursor: 'var(--cyan)'
   }
 ]
 
@@ -41,7 +44,7 @@ export default function Participate() {
 
       <nav className="p-doors" aria-label="Formas de participar">
         {DOORS.map((door) => (
-          <a key={door.verb} href={door.href} className="p-door" style={{ '--tone': door.color }} data-fade>
+          <a key={door.verb} href={door.href} className="p-door" style={{ '--tone': door.color }} data-cursor-color={door.cursor} data-fade>
             <span className="p-door-fill" aria-hidden="true" />
             <span className="p-door-verb">{door.verb}</span>
             <span className="p-door-meta">

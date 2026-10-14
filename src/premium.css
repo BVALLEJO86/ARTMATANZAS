@@ -2258,3 +2258,120 @@ body {
   .p-enc-date,
   .p-enc .p-ig { grid-column: 1 / -1; }
 }
+
+/* =========================================================
+   Impacto: titular con notas al pie (editorial, sin grilla)
+   ========================================================= */
+.p-impact .p-impact-title {
+  margin: 2.4rem 0 clamp(4rem, 8vw, 8rem);
+}
+
+.p-impact-line {
+  display: block;
+  width: fit-content;
+  white-space: nowrap;
+  transition: color 0.5s var(--ease-out), opacity 0.5s var(--ease-out);
+}
+
+.p-impact-line sup,
+.p-notes sup {
+  font-family: var(--font-body);
+  font-stretch: 100%;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.p-impact-line sup {
+  display: inline-block;
+  margin-left: 0.25em;
+  font-size: 0.18em;
+  vertical-align: top;
+  transform: translateY(0.6em);
+}
+
+/* Al pasar el mouse por una palabra (o su nota), el resto se atenúa */
+.p-impact.has-active .p-impact-line:not(.is-active),
+.p-impact.has-active .p-notes li:not(.is-active) { opacity: 0.22; }
+
+.p-notes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2rem clamp(20px, 3vw, 48px);
+  margin: 0;
+  padding: 1.4rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--black);
+}
+
+.p-notes li {
+  display: flex;
+  gap: 0.7rem;
+  transition: opacity 0.5s var(--ease-out);
+}
+
+.p-notes sup {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--black);
+}
+
+.p-notes p {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* La grilla anterior ya no se usa */
+.p-axes { display: none; }
+
+@media (max-width: 900px) {
+  .p-notes { grid-template-columns: 1fr 1fr; }
+  .p-impact-line { white-space: normal; }
+}
+
+@media (max-width: 560px) {
+  .p-notes { grid-template-columns: 1fr; gap: 1.2rem; }
+}
+.p-impact .p-impact-title { font-size: clamp(2.4rem, 7.4vw, 10rem); }
+.p-impact-line sup {
+  margin-left: 0.12em;
+  font-size: 0.2em;
+  vertical-align: 2.6em;
+  transform: none;
+}
+@media (max-width: 900px) { .p-impact .p-impact-title { font-size: clamp(2rem, 10vw, 4rem); } }
+.p-impact.has-active .p-impact-line:not(.is-active) { opacity: 1; color: rgba(17, 17, 17, 0.16); }
+
+/* Cursor con etiqueta: celeste por defecto (el amarillo se perdía sobre fondos amarillos) */
+.custom-cursor.has-label { background: var(--cyan); }
+
+/* Etiquetas largas del cursor (ej. DEJAR HUELLA) pasan a dos líneas en vez de cortarse */
+.custom-cursor.has-label {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.05;
+  padding: 0 10px;
+  font-size: 10px;
+}
+
+/* Impacto: cada palabra toma su color al pasar el cursor */
+:root { --lilac: #C9B6E4; }
+.p-impact-line { transition: color 0.45s var(--ease-out), -webkit-text-stroke-color 0.45s var(--ease-out); -webkit-text-stroke: 1.5px transparent; }
+.p-impact .p-impact-line.is-active {
+  color: var(--tone);
+  -webkit-text-stroke-color: var(--black);
+}
+.p-notes li.is-active sup {
+  display: inline-grid;
+  place-items: center;
+  width: 1.6em;
+  height: 1.6em;
+  border-radius: 50%;
+  background: var(--tone);
+  color: var(--black);
+  line-height: 1;
+}
+.p-notes li.is-active p { color: var(--black); }
+.p-notes li.is-active sup { flex: none; font-size: 0.66rem; }

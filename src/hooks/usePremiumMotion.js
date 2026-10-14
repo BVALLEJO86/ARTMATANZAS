@@ -245,7 +245,7 @@ export function usePremiumMotion() {
         /* ---------- IMPACTO: líneas que llegan desde los lados ---------- */
         q('[data-slide]').forEach((line) => {
           gsap.from(line, {
-            xPercent: Number(line.dataset.slide) * 35,
+            xPercent: Number(line.dataset.slide) * 10,
             autoAlpha: 0.2,
             ease: 'none',
             scrollTrigger: { trigger: line, start: 'top bottom', end: 'top 55%', scrub: 0.8 }

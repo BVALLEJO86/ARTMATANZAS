@@ -25,7 +25,7 @@ export default function Territory() {
       </div>
 
       {/* Galería horizontal: en escritorio se desplaza con el scroll; en celular se desliza con el dedo. */}
-      <div className="p-gallery" data-gallery>
+      <div className="p-gallery" data-gallery data-cursor="SCROLL">
         <ul className="p-gallery-track" data-gallery-track aria-label="Galería de Matanzas y Hotel Mar Blanco">
           {PHOTOS.map((src, index) => (
             <li key={src} className="p-gallery-item">
