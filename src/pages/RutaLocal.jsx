@@ -197,8 +197,32 @@ export default function RutaLocal() {
         const ease = 'expo.out'
 
         // Portada
-        gsap.from('[data-rl-line]', { yPercent: 115, duration: 1.3, ease, stagger: 0.12, delay: 0.2 })
-        gsap.from('[data-rl-fade]', { autoAlpha: 0, y: 16, duration: 1, ease, stagger: 0.07, delay: 0.7 })
+        const intro = gsap.timeline({ defaults: { ease }, delay: 0.15 })
+        intro
+          .from('[data-rl-line]', { yPercent: 118, duration: 1.4, stagger: 0.11 })
+          .from('[data-rl-hsun]', { scale: 0, transformOrigin: '50% 100%', duration: 1.6 }, 0.7)
+          .from('[data-rl-fade]', { autoAlpha: 0, y: 18, duration: 1.1, stagger: 0.08 }, 0.9)
+
+        // Las líneas se desplazan en sentidos opuestos al bajar.
+        gsap.utils.toArray('[data-rl-drift]').forEach((line) => {
+          gsap.to(line, {
+            xPercent: Number(line.dataset.rlDrift) * (conditions.desktop ? 6 : 4),
+            ease: 'none',
+            scrollTrigger: { trigger: '.rl-hero', start: 'top top', end: 'bottom top', scrub: true }
+          })
+        })
+
+        // Sello: gira solo y acelera al pasar el cursor.
+        const sealSpin = gsap.to('[data-rl-seal]', { rotate: 360, duration: 16, ease: 'none', repeat: -1, transformOrigin: '50% 50%' })
+        const sealEl = pageRef.current.querySelector('.rl-seal')
+        if (sealEl) {
+          const fast = () => gsap.to(sealSpin, { timeScale: 5, duration: 0.5 })
+          const slow = () => gsap.to(sealSpin, { timeScale: 1, duration: 1.2 })
+          sealEl.addEventListener('pointerenter', fast)
+          sealEl.addEventListener('pointerleave', slow)
+        }
+
+
 
         // Visor: la ventana amarilla recorre la costa y la revela en color.
         const viewer = pageRef.current.querySelector('[data-rl-viewer]')
@@ -569,18 +593,40 @@ export default function RutaLocal() {
       <section className="rl-hero" aria-labelledby="rl-statement">
         <div className="rl-wrap">
           <div className="rl-hero-top" data-rl-fade>
-            <p className="rl-label">Ruta Local · Temporada 2026</p>
-            <p className="rl-label rl-muted">Navidad · O’Higgins · Chile</p>
+            <p className="rl-label">(Ruta Local)</p>
+            <p className="rl-label rl-hero-mid">Temporada 2026</p>
+            <p className="rl-label rl-muted rl-hero-end">Navidad — Chile</p>
           </div>
 
-          <h1 id="rl-statement" className="rl-statement" aria-label="Ven por el arte. Quédate por la gente.">
-            {/* Cortes de línea distintos para escritorio y móvil */}
-            {['Ven por el arte.', 'Quédate por', 'la gente.'].map((line) => (
-              <span key={line} className="rl-line rl-line-d" aria-hidden="true"><span data-rl-line>{line}</span></span>
-            ))}
-            {['Ven por', 'el arte.', 'Quédate por', 'la gente.'].map((line) => (
-              <span key={line} className="rl-line rl-line-m" aria-hidden="true"><span data-rl-line>{line}</span></span>
-            ))}
+          {/* Titular: contraste de pesos (negro / fino) y el sol de la marca como signo */}
+          <h1 id="rl-statement" className="rl-statement rl-poster" aria-label="Ven por el arte. Quédate por la gente.">
+            <span className="rl-pl rl-pl-1" data-rl-drift="-1" aria-hidden="true">
+              <span className="rl-pm"><span data-rl-line>Ven por</span></span>
+              <span className="rl-note" data-rl-fade>
+                (01)
+                <br />
+                Temporada de arte
+                <br />
+                en la costa
+              </span>
+            </span>
+            <span className="rl-pl rl-pl-2" data-rl-drift="1" aria-hidden="true">
+              <span className="rl-pm"><span data-rl-line>el arte.</span></span>
+            </span>
+            <span className="rl-pl rl-pl-3 rl-thin" data-rl-drift="-1" aria-hidden="true">
+              <span className="rl-pm"><span data-rl-line>Quédate</span></span>
+              <span className="rl-hsun" data-rl-hsun />
+            </span>
+            <span className="rl-pl rl-pl-4 rl-thin" data-rl-drift="1" aria-hidden="true">
+              <span className="rl-note rl-note-l" data-rl-fade>
+                (02)
+                <br />
+                Red local de
+                <br />
+                Navidad
+              </span>
+              <span className="rl-pm"><span data-rl-line>por la gente.</span></span>
+            </span>
           </h1>
 
           <div className="rl-hero-foot">
@@ -588,8 +634,29 @@ export default function RutaLocal() {
               Ruta Local ART MATANZAS conecta cultura, paisaje y economía local. Los integrantes no se presentan como
               auspiciadores ni proveedores de beneficios.
             </p>
-            <a href="#la-ruta" className="rl-cta" data-rl-fade data-rl-magnetic data-cursor="BAJAR">
-              Recorrer la ruta <Arrow dir="down" />
+            <p className="rl-hero-facts" data-rl-fade>
+              <span>
+                <b>{pad(PLACES.length)}</b> lugares
+              </span>
+              <span>
+                <b>{pad(LOCALITIES.length)}</b> localidades
+              </span>
+              <span>
+                <b>01</b> costa
+              </span>
+            </p>
+            <a href="#la-ruta" className="rl-seal" data-rl-fade data-cursor="BAJAR" aria-label="Recorrer la ruta">
+              <svg viewBox="0 0 200 200" data-rl-seal aria-hidden="true">
+                <defs>
+                  <path id="rl-seal-path" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+                </defs>
+                <text>
+                  <textPath href="#rl-seal-path">RECORRER LA RUTA · RECORRER LA RUTA · </textPath>
+                </text>
+              </svg>
+              <span className="rl-seal-core" aria-hidden="true">
+                <Arrow dir="down" />
+              </span>
             </a>
           </div>
         </div>
