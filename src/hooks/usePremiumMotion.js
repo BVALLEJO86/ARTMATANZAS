@@ -59,12 +59,7 @@ export function usePremiumMotion() {
           cleanups.push(() => window.removeEventListener('am:intro-done', onDone))
         }
 
-        // El "sol" se hunde en el horizonte al hacer scroll.
-        gsap.to(sun, {
-          yPercent: 60,
-          ease: 'none',
-          scrollTrigger: { trigger: '[data-hero]', start: 'top top', end: 'bottom top', scrub: true }
-        })
+        // El sol queda fijo sobre el horizonte (sin movimiento con el scroll).
         gsap.to(photoImg, {
           yPercent: 12,
           ease: 'none',

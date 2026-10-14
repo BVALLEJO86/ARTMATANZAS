@@ -2727,12 +2727,5 @@ body {
   aspect-ratio: 2 / 1;
 }
 @media (min-width: 901px) {
-  .p-hero-field { min-height: clamp(340px, 52vh, 680px); }
-}
-
-@media (max-width: 900px) {
-  .p-hero-field { min-height: 44svh; }
-}
-@media (min-width: 901px) {
-  .p-hero-sun { --size: clamp(15rem, 42vw, 50rem); }
+  .p-hero-field { min-height: clamp(220px, 30vh, 420px); }
 }
