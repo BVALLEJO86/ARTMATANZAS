@@ -602,13 +602,6 @@ export default function RutaLocal() {
           <h1 id="rl-statement" className="rl-statement rl-poster" aria-label="Ven por el arte. Quédate por la gente.">
             <span className="rl-pl rl-pl-1" data-rl-drift="-1" aria-hidden="true">
               <span className="rl-pm"><span data-rl-line>Ven por</span></span>
-              <span className="rl-note" data-rl-fade>
-                (01)
-                <br />
-                Temporada de arte
-                <br />
-                en la costa
-              </span>
             </span>
             <span className="rl-pl rl-pl-2" data-rl-drift="1" aria-hidden="true">
               <span className="rl-pm"><span data-rl-line>el arte.</span></span>
@@ -618,13 +611,6 @@ export default function RutaLocal() {
               <span className="rl-hsun" data-rl-hsun />
             </span>
             <span className="rl-pl rl-pl-4 rl-thin" data-rl-drift="1" aria-hidden="true">
-              <span className="rl-note rl-note-l" data-rl-fade>
-                (02)
-                <br />
-                Red local de
-                <br />
-                Navidad
-              </span>
               <span className="rl-pm"><span data-rl-line>por la gente.</span></span>
             </span>
           </h1>
