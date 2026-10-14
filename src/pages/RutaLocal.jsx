@@ -345,6 +345,35 @@ export default function RutaLocal() {
           })
         }
 
+        // Agenda: titular en dos pesos, líneas que se cruzan y tres soles (uno por encuentro).
+        gsap.from('[data-rl-agline]', {
+          yPercent: 118,
+          duration: 1.3,
+          ease,
+          stagger: 0.12,
+          scrollTrigger: { trigger: '[data-rl-agt]', start: 'top 85%', once: true }
+        })
+        gsap.from('[data-rl-agsun]', {
+          scale: 0,
+          transformOrigin: '50% 100%',
+          duration: 1.2,
+          ease: 'expo.out',
+          stagger: 0.12,
+          delay: 0.4,
+          scrollTrigger: { trigger: '[data-rl-agt]', start: 'top 85%', once: true }
+        })
+        gsap.utils.toArray('[data-rl-agdrift]').forEach((line) => {
+          gsap.fromTo(
+            line,
+            { xPercent: Number(line.dataset.rlAgdrift) * -5 },
+            {
+              xPercent: Number(line.dataset.rlAgdrift) * 5,
+              ease: 'none',
+              scrollTrigger: { trigger: '[data-rl-agt]', start: 'top bottom', end: 'bottom top', scrub: 0.6 }
+            }
+          )
+        })
+
         // Agenda: cada fila dibuja su línea, sube la fecha y sale su pequeño sol.
         gsap.utils.toArray('[data-rl-ag]').forEach((item) => {
           const tl = gsap.timeline({ scrollTrigger: { trigger: item, start: 'top 85%', once: true } })
@@ -845,9 +874,18 @@ export default function RutaLocal() {
       <section id="agenda" className="rl-section rl-agenda" aria-labelledby="agenda-title">
         <div className="rl-wrap">
           <div className="rl-head">
-            <p className="rl-label">Agenda · Hotel Mar Blanco</p>
-            <h2 id="agenda-title" className="rl-title" data-rl-title>
-              Tres encuentros. Tres miradas.
+            <h2 id="agenda-title" className="rl-title rl-ag-title" aria-label="Tres encuentros. Tres miradas." data-rl-agt>
+              <span className="rl-pl" data-rl-agdrift="-1" aria-hidden="true">
+                <span className="rl-pm"><span data-rl-agline>Tres encuentros.</span></span>
+              </span>
+              <span className="rl-pl rl-thin rl-ag-title-2" data-rl-agdrift="1" aria-hidden="true">
+                <span className="rl-pm"><span data-rl-agline>Tres miradas.</span></span>
+                <span className="rl-ag-suns">
+                  {ENCOUNTERS.map((e) => (
+                    <i key={e.index} style={{ background: e.color }} data-rl-agsun />
+                  ))}
+                </span>
+              </span>
             </h2>
           </div>
 
