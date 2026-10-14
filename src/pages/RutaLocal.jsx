@@ -10,6 +10,7 @@ import photoMatanzas from '../Assets/Fotos/ruta-matanzas.webp'
 import photoPupuya from '../Assets/Fotos/ruta-vega-de-pupuya.webp'
 import photoPuertecillo from '../Assets/Fotos/ruta-puertecillo.webp'
 import conaturLogo from '../Assets/Aliados/conatur-navidad.webp'
+import Marquee from '../components/Marquee'
 import '../ruta.css'
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
@@ -39,6 +40,15 @@ const STATIONS = {
   'VEGA DE PUPUYA': { photo: photoPupuya, focus: '42% 50%', alt: 'Kitesurfistas preparando sus velas en la playa de Pupuya' },
   PUERTECILLO: { photo: photoPuertecillo, focus: '32% 50%', alt: 'Atardecer sobre la bahía de Puertecillo' }
 }
+
+const TICKER = [
+  { text: 'MATANZAS', color: 'var(--yellow)' },
+  { text: 'ALOJAMIENTO', color: 'var(--cyan)' },
+  { text: 'VEGA DE PUPUYA', color: 'var(--yellow)' },
+  { text: 'COCINAS', color: 'var(--red)' },
+  { text: 'PUERTECILLO', color: 'var(--yellow)' },
+  { text: 'OFICIOS', color: 'var(--lilac)' }
+]
 
 const pad = (n) => String(n).padStart(2, '0')
 const waLink = (phone) => `https://wa.me/${phone.replace(/\D/g, '')}`
@@ -141,7 +151,7 @@ function Place({ place, index, added, onToggle }) {
           type="button"
           className="rl-save"
           aria-pressed={added}
-          onClick={() => onToggle(place.id)}
+          onClick={(event) => onToggle(place.id, event)}
           data-cursor={added ? 'QUITAR' : 'GUARDAR'}
         >
           <span className="rl-save-icon" aria-hidden="true" />
@@ -238,7 +248,7 @@ export default function RutaLocal() {
         })
 
         // La ruta: el trazo se dibuja y las estaciones llegan en orden.
-        gsap.from('[data-rl-line]', {
+        gsap.from('[data-rl-track]', {
           scaleX: conditions.desktop ? 0 : 1,
           scaleY: conditions.desktop ? 1 : 0,
           transformOrigin: '0 0',
@@ -255,6 +265,125 @@ export default function RutaLocal() {
           scrollTrigger: { trigger: '[data-rl-stations]', start: 'top 80%', once: true }
         })
 
+        const cleanups = []
+
+        // Cinta: avanza sola y acelera/invierte con la velocidad del scroll (como en la home).
+        pageRef.current.querySelectorAll('[data-marquee-track]').forEach((track) => {
+          const loop = gsap.to(track, { xPercent: -25, duration: 26, ease: 'none', repeat: -1 })
+          ScrollTrigger.create({
+            trigger: track,
+            start: 'top bottom',
+            end: 'bottom top',
+            onUpdate: (self) => {
+              const boost = Math.min(Math.abs(self.getVelocity()) / 300, 5)
+              gsap.to(loop, {
+                timeScale: self.direction * (1 + boost),
+                duration: 0.25,
+                overwrite: true,
+                onComplete: () => gsap.to(loop, { timeScale: self.direction, duration: 1.2 })
+              })
+            }
+          })
+        })
+
+        // Fotos de las localidades: paralaje dentro del marco.
+        gsap.utils.toArray('.rl-station-media img').forEach((img) => {
+          gsap.fromTo(
+            img,
+            { yPercent: -8 },
+            {
+              yPercent: 8,
+              ease: 'none',
+              scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true }
+            }
+          )
+        })
+
+        // Cifra del directorio: cuenta desde 00.
+        const counter = pageRef.current.querySelector('[data-rl-count]')
+        if (counter) {
+          const target = Number(counter.dataset.rlCount)
+          const state = { n: 0 }
+          counter.textContent = '00'
+          gsap.to(state, {
+            n: target,
+            duration: 1.6,
+            ease: 'power3.out',
+            onUpdate: () => (counter.textContent = pad(Math.round(state.n))),
+            scrollTrigger: { trigger: counter, start: 'top 85%', once: true }
+          })
+        }
+
+        // Agenda: las fechas caen en su lugar.
+        gsap.from('.rl-agenda-date strong', {
+          scale: 0,
+          rotate: -90,
+          duration: 1,
+          ease: 'back.out(1.6)',
+          stagger: 0.12,
+          scrollTrigger: { trigger: '.rl-agenda-list', start: 'top 80%', once: true }
+        })
+
+        // Conatur: el sello gira con el scroll.
+        gsap.to('.rl-ally-logo', {
+          rotate: 360,
+          ease: 'none',
+          scrollTrigger: { trigger: '.rl-ally', start: 'top bottom', end: 'bottom top', scrub: 1 }
+        })
+
+        // Cierre: el sol amarillo sale del horizonte.
+        gsap.fromTo(
+          '[data-rl-rise]',
+          { yPercent: 100 },
+          {
+            yPercent: 0,
+            ease: 'none',
+            scrollTrigger: { trigger: '[data-rl-end]', start: 'top 85%', end: 'bottom bottom', scrub: 0.8 }
+          }
+        )
+        gsap.from('[data-rl-end-line]', {
+          yPercent: 115,
+          duration: 1.3,
+          ease,
+          stagger: 0.1,
+          scrollTrigger: { trigger: '[data-rl-end]', start: 'top 70%', once: true }
+        })
+
+        // Encabezado: se esconde al bajar y vuelve al subir.
+        const header = document.querySelector('.site-header')
+        if (header) {
+          ScrollTrigger.create({
+            start: 120,
+            end: 'max',
+            onUpdate: (self) => header.classList.toggle('is-hidden', self.direction === 1),
+            onLeaveBack: () => header.classList.remove('is-hidden')
+          })
+          cleanups.push(() => header.classList.remove('is-hidden'))
+        }
+
+        // Botones magnéticos (solo con cursor).
+        if (window.matchMedia('(pointer: fine)').matches) {
+          pageRef.current.querySelectorAll('[data-rl-magnetic]').forEach((el) => {
+            const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3.out' })
+            const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3.out' })
+            const move = (event) => {
+              const r = el.getBoundingClientRect()
+              xTo((event.clientX - (r.left + r.width / 2)) * 0.3)
+              yTo((event.clientY - (r.top + r.height / 2)) * 0.3)
+            }
+            const leave = () => {
+              xTo(0)
+              yTo(0)
+            }
+            el.addEventListener('pointermove', move)
+            el.addEventListener('pointerleave', leave)
+            cleanups.push(() => {
+              el.removeEventListener('pointermove', move)
+              el.removeEventListener('pointerleave', leave)
+            })
+          })
+        }
+
         gsap.utils.toArray('[data-rl-reveal]').forEach((el) => {
           gsap.from(el, {
             autoAlpha: 0,
@@ -264,11 +393,83 @@ export default function RutaLocal() {
             scrollTrigger: { trigger: el, start: 'top 88%', once: true }
           })
         })
+
+        return () => cleanups.forEach((fn) => fn())
       }
     )
 
     return () => mm.revert()
   }, [])
+
+  // Al entrar a la página siempre parte arriba (salvo que la URL traiga un #ancla).
+  useLayoutEffect(() => {
+    if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+    if (window.location.hash) return undefined
+    const toTop = () => {
+      window.__lenis?.scrollTo(0, { immediate: true, force: true })
+      window.scrollTo(0, 0)
+    }
+    toTop()
+    const raf = requestAnimationFrame(() => requestAnimationFrame(toTop))
+    return () => cancelAnimationFrame(raf)
+  }, [])
+
+  // Píldora flotante "Mi ruta": aparece después de la portada y se oculta en la sección Mi ruta.
+  const [pillOn, setPillOn] = useState(false)
+  const pillRef = useRef(null)
+  useEffect(() => {
+    const update = () => {
+      const mine = document.getElementById('mi-ruta')?.getBoundingClientRect()
+      const past = window.scrollY > window.innerHeight * 0.9
+      const atMine = mine && mine.top < window.innerHeight && mine.bottom > 0
+      const end = document.querySelector('.rl-end')?.getBoundingClientRect()
+      const atEnd = end && end.top < window.innerHeight * 0.8
+      setPillOn(past && !atMine && !atEnd)
+    }
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    return () => window.removeEventListener('scroll', update)
+  }, [])
+
+  // Guardar: un punto del color del lugar vuela hasta la píldora y el contador late.
+  const save = (id, event) => {
+    const adding = !ids.includes(id)
+    toggle(id)
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) return
+    const pill = pillRef.current
+    if (adding && event && pill && pillOn) {
+      const from = event.currentTarget.getBoundingClientRect()
+      const to = pill.getBoundingClientRect()
+      const place = PLACES.find((p) => p.id === id)
+      const dot = document.createElement('span')
+      dot.className = 'rl-fly'
+      dot.style.background = TYPE_COLOR[place.type]
+      dot.style.left = `${from.left + 18}px`
+      dot.style.top = `${from.top + from.height / 2}px`
+      document.body.appendChild(dot)
+      gsap.to(dot, {
+        x: to.left + 24 - (from.left + 18),
+        y: to.top + to.height / 2 - (from.top + from.height / 2),
+        scale: 0.5,
+        duration: 0.8,
+        ease: 'power3.inOut',
+        onComplete: () => dot.remove()
+      })
+    }
+    gsap.fromTo(
+      ['.rl-pill-count', '.rl-mine-count'],
+      { scale: 1.5 },
+      { scale: 1, duration: 0.7, ease: 'elastic.out(1, 0.45)', delay: adding && pillOn ? 0.7 : 0 }
+    )
+  }
+
+  const goMine = (event) => {
+    event.preventDefault()
+    const target = document.getElementById('mi-ruta')
+    if (window.__lenis) window.__lenis.scrollTo(target, { offset: -80 })
+    else target?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   // Sin cursor (celular/tablet): la localidad que cruza el centro de la pantalla se pinta a color.
   useEffect(() => {
@@ -368,7 +569,7 @@ export default function RutaLocal() {
               Ruta Local ART MATANZAS conecta cultura, paisaje y economía local. Los integrantes no se presentan como
               auspiciadores ni proveedores de beneficios.
             </p>
-            <a href="#la-ruta" className="rl-cta" data-rl-fade data-cursor="BAJAR">
+            <a href="#la-ruta" className="rl-cta" data-rl-fade data-rl-magnetic data-cursor="BAJAR">
               Recorrer la ruta <Arrow dir="down" />
             </a>
           </div>
@@ -384,6 +585,8 @@ export default function RutaLocal() {
           <span className="rl-viewer-frame" aria-hidden="true" />
         </figure>
       </section>
+
+      <Marquee items={TICKER} />
 
       {/* ---------- CITA ---------- */}
       <section className="rl-quote" data-rl-quote aria-label="Manifiesto de la Ruta Local">
@@ -413,7 +616,7 @@ export default function RutaLocal() {
           </div>
 
           <div className="rl-stations-wrap" data-rl-stations>
-          <span className="rl-route-line" data-rl-line aria-hidden="true" />
+          <span className="rl-route-line" data-rl-track aria-hidden="true" />
           <ol className="rl-stations">
             {LOCALITIES.map((loc, i) => {
               const places = inLocality(loc)
@@ -465,7 +668,7 @@ export default function RutaLocal() {
             </h2>
             <div className="rl-net-aside" data-rl-reveal>
               <p className="rl-net-count">
-                <strong>{PLACES.length}</strong>
+                <strong data-rl-count={PLACES.length}>{pad(PLACES.length)}</strong>
                 <span>
                   lugares en la red,
                   <br />
@@ -508,7 +711,7 @@ export default function RutaLocal() {
                 place={place}
                 index={PLACES.indexOf(place) + 1}
                 added={ids.includes(place.id)}
-                onToggle={toggle}
+                onToggle={save}
               />
             ))}
           </ol>
@@ -604,7 +807,7 @@ export default function RutaLocal() {
             Conatur Navidad
           </h2>
           <p className="rl-ally-copy">Un aliado para conectar el turismo y el comercio de Navidad desde la colaboración local.</p>
-          <a href={CONATUR_URL} className="rl-button" target="_blank" rel="noopener noreferrer">
+          <a href={CONATUR_URL} className="rl-button" target="_blank" rel="noopener noreferrer" data-rl-magnetic>
             <span>Conocer a Conatur</span>
             <span className="rl-button-icon" aria-hidden="true">
               <Arrow dir="up-right" />
@@ -612,6 +815,32 @@ export default function RutaLocal() {
           </a>
         </div>
       </section>
+      {/* ---------- CIERRE ---------- */}
+      <section className="rl-end" data-rl-end aria-label="Cierre">
+        <div className="rl-wrap">
+          <p className="rl-end-title">
+            <span className="rl-line"><span data-rl-end-line>Nos vemos</span></span>
+            <span className="rl-line"><span data-rl-end-line>en la costa.</span></span>
+          </p>
+        </div>
+        <div className="rl-end-stage" aria-hidden="true">
+          <span className="rl-end-sun" data-rl-rise />
+          <span className="rl-end-horizon" />
+        </div>
+      </section>
+
+      <a
+        href="#mi-ruta"
+        ref={pillRef}
+        className={`rl-pill ${pillOn ? 'is-on' : ''}`}
+        onClick={goMine}
+        aria-label={`Ver mi ruta: ${ids.length} lugares guardados`}
+        tabIndex={pillOn ? 0 : -1}
+        data-cursor="MI RUTA"
+      >
+        <span className="rl-pill-count">{pad(ids.length)}</span>
+        <span>Mi ruta</span>
+      </a>
     </main>
   )
 }

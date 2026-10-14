@@ -1156,3 +1156,129 @@
 /* Celular: la localidad activa al hacer scroll pasa a color */
 .rl-page .rl-station.is-active .rl-station-media img { filter: grayscale(0); transform: scale(1); }
 .rl-page .rl-station.is-active .rl-station-dot { background: var(--yellow); transform: scale(1.3); }
+
+/* =========================================================
+   Ronda 6: más movimiento (en la línea de la home)
+   ========================================================= */
+.rl-page .p-marquee { margin-top: 0; }
+
+/* Cierre: el sol amarillo sube desde el horizonte */
+.rl-page .rl-end {
+  position: relative;
+  padding-top: clamp(6rem, 11vw, 11rem);
+  overflow: hidden;
+}
+
+.rl-page .rl-end-title {
+  margin: 0 0 0 -0.05em;
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: clamp(2.6rem, 9vw, 13rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+  text-transform: uppercase;
+}
+
+.rl-page .rl-end-stage {
+  position: relative;
+  height: clamp(9rem, 22vw, 22rem);
+  margin: clamp(1.4rem, 3vw, 2.6rem) var(--gutter) 0;
+  overflow: hidden;
+}
+
+.rl-page .rl-end-sun {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: min(84vw, 60rem);
+  aspect-ratio: 2 / 1;
+  max-height: 100%;
+  transform: translateX(-50%);
+  border-radius: 999px 999px 0 0;
+  background: var(--yellow);
+}
+
+.rl-page .rl-end-sun { width: auto; height: 100%; }
+
+.rl-page .rl-end-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--black);
+}
+
+/* Píldora flotante Mi ruta */
+.rl-page .rl-pill {
+  position: fixed;
+  right: var(--gutter);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 52px;
+  padding: 0 1.3rem 0 0.4rem;
+  border-radius: 999px;
+  background: var(--black);
+  color: var(--bg);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(140%);
+  pointer-events: none;
+  transition: transform 0.7s var(--ease-out), opacity 0.4s;
+  box-shadow: 0 10px 30px rgba(17, 17, 17, 0.18);
+}
+
+.rl-page .rl-pill.is-on { opacity: 1; transform: none; pointer-events: auto; }
+
+.rl-page .rl-pill-count {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0;
+}
+
+.rl-page .rl-pill:hover .rl-pill-count { background: var(--bg); }
+.rl-page .rl-pill:focus-visible { outline: 2px solid var(--black); outline-offset: 3px; }
+
+.rl-page .rl-mine-count { display: inline-block; transform-origin: 100% 0; }
+
+/* Punto que vuela al guardar */
+.rl-fly {
+  position: fixed;
+  z-index: 70;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 0 2px #111;
+}
+
+@media (max-width: 900px) {
+  .rl-page .rl-end-title { font-size: clamp(2.3rem, 12vw, 5rem); }
+  .rl-page .rl-pill { min-height: 48px; }
+}
+
+/* Con el encabezado escondido, la barra de filtros sube al borde */
+.rl-page .rl-filters { transition: top 0.7s var(--ease-out); }
+.page-shell:has(.site-header.is-hidden) .rl-page .rl-filters { top: 0; }
+
+/* Píldora centrada abajo: no tapa los botones Guardar */
+.rl-page .rl-pill { right: auto; left: 50%; translate: -50% 0; }
