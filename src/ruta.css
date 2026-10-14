@@ -1425,3 +1425,18 @@
   .rl-page .rl-ally-title { font-size: clamp(2.3rem, 12.2vw, 5rem); }
   .rl-page .rl-ally-seal { width: 0.72em; height: 0.72em; }
 }
+
+.rl-page .rl-ally { scroll-margin-top: 0; }
+.rl-page .rl-ally-seal-m { display: none; }
+
+@media (max-width: 900px) {
+  .rl-page .rl-ally-line-2 .rl-ally-seal { display: none; }
+  .rl-page .rl-ally-seal-m {
+    display: grid;
+    width: clamp(120px, 38vw, 170px);
+    height: clamp(120px, 38vw, 170px);
+    margin: 2.2rem 0 0;
+    box-shadow: 0 0 0 3px var(--black);
+  }
+  .rl-page .rl-ally-seal-m + .rl-ally-title { margin-top: 1.6rem; }
+}

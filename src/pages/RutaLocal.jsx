@@ -19,7 +19,8 @@ export const RUTA_LOCAL_LINKS = [
   { href: '#la-ruta', label: 'LA RUTA' },
   { href: '#red-local', label: 'RED LOCAL' },
   { href: '#mi-ruta', label: 'MI RUTA' },
-  { href: '#agenda', label: 'AGENDA' }
+  { href: '#agenda', label: 'AGENDA' },
+  { href: '#aliado', label: 'ALIADO TERRITORIAL' }
 ]
 
 const STORAGE_KEY = 'am-ruta-local'
@@ -831,12 +832,16 @@ export default function RutaLocal() {
       </section>
 
       {/* ---------- CONATUR ---------- */}
-      <section className="rl-ally" aria-labelledby="conatur-title" data-rl-ally>
+      <section id="aliado" className="rl-ally" aria-labelledby="conatur-title" data-rl-ally>
         <div className="rl-wrap">
           <div className="rl-ally-top">
             <p className="rl-label">Aliado territorial</p>
             <p className="rl-label rl-ally-sub">Corporación de Turismo y Comercio · Navidad</p>
           </div>
+
+          <span className="rl-ally-seal rl-ally-seal-m" data-rl-ally-seal aria-hidden="true">
+            <img src={conaturLogo} alt="" />
+          </span>
 
           <h2 id="conatur-title" className="rl-ally-title" aria-label="Conatur Navidad">
             <span className="rl-ally-line" data-rl-ally-line="-1" aria-hidden="true">
