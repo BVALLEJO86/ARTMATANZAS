@@ -1803,3 +1803,4 @@
   .rl-page .rl-thin { font-size: 0.86em; }
   .rl-page .rl-pl-3 { margin-top: 0.14em; }
 }
+.rl-page .rl-hero { overflow-x: clip; }

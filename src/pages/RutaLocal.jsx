@@ -206,9 +206,9 @@ export default function RutaLocal() {
         // Las líneas se desplazan en sentidos opuestos al bajar.
         gsap.utils.toArray('[data-rl-drift]').forEach((line) => {
           gsap.to(line, {
-            xPercent: Number(line.dataset.rlDrift) * (conditions.desktop ? 6 : 4),
+            xPercent: Number(line.dataset.rlDrift) * (conditions.desktop ? 18 : 22),
             ease: 'none',
-            scrollTrigger: { trigger: '.rl-hero', start: 'top top', end: 'bottom top', scrub: true }
+            scrollTrigger: { trigger: '.rl-hero', start: 'top top', end: 'bottom top', scrub: 0.6 }
           })
         })
 
