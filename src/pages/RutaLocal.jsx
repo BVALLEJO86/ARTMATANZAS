@@ -20,7 +20,8 @@ export const RUTA_LOCAL_LINKS = [
   { href: '#red-local', label: 'RED LOCAL' },
   { href: '#mi-ruta', label: 'MI RUTA' },
   { href: '#agenda', label: 'AGENDA' },
-  { href: '#aliado', label: 'ALIADO TERRITORIAL' }
+  { href: '#aliado', label: 'ALIADO TERRITORIAL' },
+  { to: '/', label: 'ART MATANZAS' }
 ]
 
 const STORAGE_KEY = 'am-ruta-local'
