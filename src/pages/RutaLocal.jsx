@@ -270,6 +270,18 @@ export default function RutaLocal() {
     return () => mm.revert()
   }, [])
 
+  // Sin cursor (celular/tablet): la localidad que cruza el centro de la pantalla se pinta a color.
+  useEffect(() => {
+    if (!window.matchMedia('(hover: none), (pointer: coarse)').matches || !('IntersectionObserver' in window)) return undefined
+    const stations = pageRef.current?.querySelectorAll('.rl-station') || []
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.target.classList.toggle('is-active', entry.isIntersecting)),
+      { rootMargin: '-38% 0px -38% 0px' }
+    )
+    stations.forEach((station) => io.observe(station))
+    return () => io.disconnect()
+  }, [])
+
   // Lista: primera carga fila a fila; al filtrar, vuelve bajo la barra y entra en cascada.
   useLayoutEffect(() => {
     const list = listRef.current

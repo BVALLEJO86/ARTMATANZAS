@@ -1152,3 +1152,7 @@
 .rl-page [data-rl-title] .rl-split-mask,
 .rl-page [data-rl-title] > div { padding-top: 0.16em; margin-top: -0.16em; }
 .rl-page .rl-title { line-height: 0.94; }
+
+/* Celular: la localidad activa al hacer scroll pasa a color */
+.rl-page .rl-station.is-active .rl-station-media img { filter: grayscale(0); transform: scale(1); }
+.rl-page .rl-station.is-active .rl-station-dot { background: var(--yellow); transform: scale(1.3); }

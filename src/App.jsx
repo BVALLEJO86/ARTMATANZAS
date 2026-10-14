@@ -11,6 +11,16 @@ import MailToast from './components/MailToast'
 
 const isRutaLocal = (path) => path.replace(/\/+$/, '') === '/ruta-local'
 
+// "Volver arriba" funciona en ambas páginas (Ruta Local no tiene #inicio).
+function scrollToTop(event) {
+  event.preventDefault()
+  event.stopPropagation()
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (window.__lenis) window.__lenis.scrollTo(0, { duration: reduced ? 0 : 1.6, immediate: reduced })
+  else window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' })
+  window.history.replaceState(null, '', window.location.pathname)
+}
+
 export default function App() {
   const path = usePath()
   // La intro solo se muestra al entrar por la home, no al volver desde Ruta Local.
@@ -49,7 +59,7 @@ export default function App() {
       <footer className="site-footer">
         <div>ART MATANZAS · TEMPORADA 2026</div>
         <div>MATANZAS · CHILE</div>
-        <a href="#inicio" className="site-footer-top">VOLVER ARRIBA <Arrow dir="up" /></a>
+        <a href="#top" className="site-footer-top" onClick={scrollToTop}>VOLVER ARRIBA <Arrow dir="up" /></a>
       </footer>
     </div>
   )
