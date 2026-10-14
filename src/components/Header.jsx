@@ -6,7 +6,8 @@ const HOME_LINKS = [
   { href: '#temporada', label: 'TEMPORADA' },
   { href: '#territorio', label: 'TERRITORIO' },
   { href: '#participar', label: 'PARTICIPAR' },
-  { href: '#prensa', label: 'PRENSA' }
+  { href: '#prensa', label: 'PRENSA' },
+  { to: '/ruta-local', label: 'RUTA LOCAL' }
 ]
 
 export default function Header({ links = HOME_LINKS, brandHref = '#inicio' }) {
@@ -51,12 +52,24 @@ export default function Header({ links = HOME_LINKS, brandHref = '#inicio' }) {
       </BrandLink>
 
       <nav id="menu-principal" className={`main-nav ${isMenuOpen ? 'is-open' : ''}`} aria-label="Navegación principal">
-        {links.map((link, index) => (
-          <a key={link.href} href={link.href} onClick={(event) => goTo(event, link.href)} style={{ '--i': index }}>
-            <span className="main-nav-label">{link.label}</span>
-            <span className="main-nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-          </a>
-        ))}
+        {links.map((link, index) => {
+          const inner = (
+            <>
+              <span className="main-nav-label">{link.label}</span>
+              <span className="main-nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            </>
+          )
+          // Enlace a otra página (Ruta Local): pasa por el router con la cortina.
+          return link.to ? (
+            <Link key={link.to} to={link.to} className="main-nav-page" onClick={() => setIsMenuOpen(false)} style={{ '--i': index }}>
+              {inner}
+            </Link>
+          ) : (
+            <a key={link.href} href={link.href} onClick={(event) => goTo(event, link.href)} style={{ '--i': index }}>
+              {inner}
+            </a>
+          )
+        })}
         <div className="main-nav-foot" aria-hidden={!isMenuOpen}>
           <p>
             <span className="main-nav-dot" />
