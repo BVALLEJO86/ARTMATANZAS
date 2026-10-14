@@ -320,14 +320,13 @@ export default function RutaLocal() {
           })
         }
 
-        // Agenda: las fechas caen en su lugar.
-        gsap.from('.rl-agenda-date strong', {
-          scale: 0,
-          rotate: -90,
-          duration: 1,
-          ease: 'back.out(1.6)',
-          stagger: 0.12,
-          scrollTrigger: { trigger: '.rl-agenda-list', start: 'top 80%', once: true }
+        // Agenda: cada fila dibuja su línea, sube la fecha y sale su pequeño sol.
+        gsap.utils.toArray('[data-rl-ag]').forEach((item) => {
+          const tl = gsap.timeline({ scrollTrigger: { trigger: item, start: 'top 85%', once: true } })
+          tl.from(item, { '--rule': 0, duration: 1.2, ease: 'expo.inOut' })
+            .from(item.querySelectorAll('.rl-ag-day, .rl-ag-month'), { yPercent: 110, duration: 1.1, ease, stagger: 0.06 }, 0.2)
+            .from(item.querySelector('.rl-ag-sun'), { scale: 0, duration: 1.2, ease: 'expo.out' }, 0.45)
+            .from(item.querySelectorAll('.rl-ag-label, .rl-ag-meta, .rl-ag-n'), { autoAlpha: 0, y: 18, duration: 0.9, ease, stagger: 0.07 }, 0.35)
         })
 
         // Conatur: las dos líneas llegan desde lados opuestos y el sello aparece girando.
@@ -798,29 +797,36 @@ export default function RutaLocal() {
             </h2>
           </div>
 
-          <ol className="rl-agenda-list">
-            {ENCOUNTERS.map((item) => {
+          <ol className="rl-ag">
+            {ENCOUNTERS.map((item, i) => {
               const [day, month] = item.dateLabel.split(' ')
+              const MONTH_NUM = { OCT: '10', NOV: '11', DIC: '12' }
               return (
-                <li key={item.index} style={{ '--type': item.color }} data-rl-reveal>
+                <li key={item.index} className="rl-ag-item" style={{ '--type': item.color }} data-rl-ag>
                   <a
                     href={`https://www.instagram.com/${item.instagram}/`}
-                    className="rl-agenda-row"
+                    className="rl-ag-row"
                     target="_blank"
                     rel="noopener noreferrer"
                     data-cursor="VER IG"
                     data-cursor-color={item.color === 'var(--cyan)' ? 'var(--red)' : undefined}
                     aria-label={`${item.label}: ${item.name}, ${item.dateLabel}. Ver Instagram`}
                   >
-                    <span className="rl-agenda-date">
-                      <strong>{day}</strong>
-                      {month}
+                    <span className="rl-ag-n" aria-hidden="true">
+                      {pad(i + 1)} <i>/ {pad(ENCOUNTERS.length)}</i>
                     </span>
-                    <span className="rl-agenda-label">{item.label.charAt(0) + item.label.slice(1).toLowerCase()}</span>
-                    <span className="rl-agenda-name">
-                      {item.name}
-                      <span className="rl-agenda-ig">
-                        @{item.instagram} <Arrow dir="up-right" />
+                    <span className="rl-ag-date" aria-hidden="true">
+                      <span className="rl-ag-sun" />
+                      <span className="rl-ag-day">{day}</span>
+                      <span className="rl-ag-month">.{MONTH_NUM[month] || month}</span>
+                    </span>
+                    <span className="rl-ag-body">
+                      <span className="rl-ag-label">{item.label}</span>
+                      <span className="rl-ag-meta">
+                        <span className="rl-ag-name">{item.name}</span>
+                        <span className="rl-ag-ig">
+                          @{item.instagram} <Arrow dir="up-right" />
+                        </span>
                       </span>
                     </span>
                   </a>
